@@ -1,0 +1,1531 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>helperpy.core.date_ops API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>helperpy.core.date_ops</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from typing import List, Optional, Tuple, Union
+
+from datetime import (
+    date,
+    datetime,
+    timedelta,
+)
+
+import pandas as pd
+from randomtimestamp import randomtimestamp
+
+from helperpy.core.exceptions import (
+    raise_exception_if_invalid_option,
+    raise_exception_if_invalid_type,
+)
+
+
+DATE_STRING_FORMAT = &#34;%Y-%m-%d&#34; # Eg: &#34;2020-03-19&#34;
+DATETIME_STRING_FORMAT = &#34;%Y-%m-%d %H:%M:%S&#34; # Eg: &#34;2020-03-19 17:45:08&#34;
+TIMESTAMP_INTEGER_FORMAT = &#34;%Y%m%d%H%M%S&#34; # Will be converted to an integer after parsing
+
+
+class TimeUnitConverter:
+    &#34;&#34;&#34;Class for time related unit conversions&#34;&#34;&#34;
+    SECONDS_PER_MINUTE = 60
+    SECONDS_PER_HOUR = SECONDS_PER_MINUTE * 60
+    SECONDS_PER_DAY = SECONDS_PER_HOUR * 24
+    SECONDS_PER_WEEK = SECONDS_PER_DAY * 7
+    SECONDS_PER_NON_LEAP_YEAR = SECONDS_PER_DAY * 365
+    SECONDS_PER_LEAP_YEAR = SECONDS_PER_DAY * 366
+
+    MINUTES_PER_HOUR = 60
+    MINUTES_PER_DAY = MINUTES_PER_HOUR * 24
+    MINUTES_PER_WEEK = MINUTES_PER_DAY * 7
+    MINUTES_PER_NON_LEAP_YEAR = MINUTES_PER_DAY * 365
+    MINUTES_PER_LEAP_YEAR = MINUTES_PER_DAY * 366
+
+    HOURS_PER_DAY = 24
+    HOURS_PER_WEEK = HOURS_PER_DAY * 7
+    HOURS_PER_NON_LEAP_YEAR = HOURS_PER_DAY * 365
+    HOURS_PER_LEAP_YEAR = HOURS_PER_DAY * 366
+
+
+
+def get_current_timestamp_as_integer() -&gt; int:
+    &#34;&#34;&#34;Returns current timestamp as an integer (Format: yyyymmddhhmmss)&#34;&#34;&#34;
+    dt_obj = datetime.now()
+    ts_now = dt_obj.strftime(TIMESTAMP_INTEGER_FORMAT)
+    return int(ts_now)
+
+
+def get_random_timestamp_as_integer() -&gt; int:
+    &#34;&#34;&#34;Returns random timestamp as an integer (Format: yyyymmddhhmmss)&#34;&#34;&#34;
+    ts_random = randomtimestamp(
+        start_year=1900,
+        end_year=datetime.now().year - 1,
+        pattern=TIMESTAMP_INTEGER_FORMAT,
+    )
+    return int(ts_random)
+
+
+def get_random_timestamp(
+        start_year: Optional[int] = 1800,
+        end_year: Optional[int] = 2200,
+    ) -&gt; datetime:
+    return datetime.strptime(randomtimestamp(start_year=start_year, end_year=end_year), &#34;%d-%m-%Y %H:%M:%S&#34;)
+
+
+def period_to_datetime(period_obj: pd._libs.tslibs.period.Period) -&gt; datetime:
+    &#34;&#34;&#34;Converts Pandas period object to datetime object&#34;&#34;&#34;
+    dt_obj = datetime(
+        year=period_obj.year,
+        month=period_obj.month,
+        day=period_obj.day,
+        hour=period_obj.hour,
+        minute=period_obj.minute,
+        second=period_obj.second,
+    )
+    return dt_obj
+
+
+def convert_to_datetime(
+        date_string: str,
+        hour: int,
+        minute: int,
+        second: int,
+    ) -&gt; datetime:
+    &#34;&#34;&#34;
+    Parameters:
+        - date_string (str): Date string of format &#34;yyyy-mm-dd&#34;
+        - hour (int): Ranges from 0 to 23, indicating hour of the day
+        - minute (int): Ranges from 0 to 59, indicating minute of the hour
+        - second (int): Ranges from 0 to 59, indicating second of the minute
+    &#34;&#34;&#34;
+    dt_obj = parse_date_string(date_string=date_string).replace(
+        hour=hour,
+        minute=minute,
+        second=second,
+    )
+    return dt_obj
+
+
+def get_day_of_week(
+        dt_obj: Union[datetime, date],
+        shorten: Optional[bool] = False,
+    ) -&gt; str:
+    &#34;&#34;&#34;
+    Returns the day of the week.
+    Day of week options when `shorten` is set to False: [&#39;Monday&#39;, &#39;Tuesday&#39;, &#39;Wednesday&#39;, &#39;Thursday&#39;, &#39;Friday&#39;, &#39;Saturday&#39;, &#39;Sunday&#39;].
+    Day of week options when `shorten` is set to True: [&#39;Mon&#39;, &#39;Tue&#39;, &#39;Wed&#39;, &#39;Thu&#39;, &#39;Fri&#39;, &#39;Sat&#39;, &#39;Sun&#39;].
+    &#34;&#34;&#34;
+    if shorten:
+        return dt_obj.strftime(&#34;%a&#34;)
+    return dt_obj.strftime(&#34;%A&#34;)
+
+
+def to_date_string(dt_obj: datetime) -&gt; str:
+    &#34;&#34;&#34;Converts datetime object to date string of format &#39;yyyy-mm-dd&#39;&#34;&#34;&#34;
+    date_string = dt_obj.strftime(DATE_STRING_FORMAT)
+    return date_string
+
+
+def to_datetime_string(dt_obj: datetime) -&gt; str:
+    &#34;&#34;&#34;Converts datetime object to datetime string of format &#39;yyyy-mm-dd hh:mm:ss&#39;&#34;&#34;&#34;
+    datetime_string = dt_obj.strftime(DATETIME_STRING_FORMAT)
+    return datetime_string
+
+
+def parse_date_string(date_string: str) -&gt; datetime:
+    &#34;&#34;&#34;
+    Parses date string of format &#39;yyyy-mm-dd&#39; into datetime object.
+    &gt;&gt;&gt; parse_date_string(date_string=&#34;2020-03-28&#34;)
+    &#34;&#34;&#34;
+    dt_obj = datetime.strptime(date_string, DATE_STRING_FORMAT)
+    return dt_obj
+
+
+def parse_datetime_string(datetime_string: str) -&gt; datetime:
+    &#34;&#34;&#34;
+    Parses datetime string of format &#39;yyyy-mm-dd hh:mm:ss&#39; into datetime object.
+    Note: The &#39;hour&#39; in the `datetime_string` must be of 24 hour format (from 0-23).
+    &gt;&gt;&gt; parse_datetime_string(datetime_string=&#34;2020-03-28 17:53:04&#34;)
+    &#34;&#34;&#34;
+    dt_obj = datetime.strptime(datetime_string, DATETIME_STRING_FORMAT)
+    return dt_obj
+
+
+def ist_to_utc(dt_obj: datetime) -&gt; datetime:
+    &#34;&#34;&#34;Subtracts 5 hours and 30 minutes from datetime object&#34;&#34;&#34;
+    return dt_obj - timedelta(hours=5, minutes=30)
+
+
+def utc_to_ist(dt_obj: datetime) -&gt; datetime:
+    &#34;&#34;&#34;Adds 5 hours and 30 minutes to datetime object&#34;&#34;&#34;
+    return dt_obj + timedelta(hours=5, minutes=30)
+
+
+def convert_to_naive_timezone(dt_obj: datetime) -&gt; datetime:
+    &#34;&#34;&#34;Converts datetime object to datetime object with a naive timezone&#34;&#34;&#34;
+    dt_obj_naive_tz = dt_obj.replace(tzinfo=None)
+    return dt_obj_naive_tz
+
+
+def get_dates_between(
+        start_date: str,
+        end_date: str,
+        as_type: Optional[str] = &#39;string&#39;,
+    ) -&gt; Union[List[datetime], List[date], List[str]]:
+    &#34;&#34;&#34;
+    Returns list of dates between the given `start_date` and `end_date`.
+    Input date-string format must be &#39;yyyy-mm-dd&#39;.
+    Options for `as_type` are: [&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;]. Default: &#39;string&#39;.
+    &#34;&#34;&#34;
+    raise_exception_if_invalid_option(
+        option_name=&#39;as_type&#39;,
+        option_value=as_type,
+        valid_option_values=[&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;],
+    )
+    period_objs = pd.date_range(start=start_date, end=end_date, freq=&#39;1D&#39;)
+    func_mapper = {
+        &#39;date&#39;: lambda period_obj: period_to_datetime(period_obj=period_obj).date(),
+        &#39;datetime&#39;: lambda period_obj: period_to_datetime(period_obj=period_obj),
+        &#39;string&#39;: lambda period_obj: to_date_string(dt_obj=period_to_datetime(period_obj=period_obj)),
+    }
+    return list(map(func_mapper[as_type], period_objs))
+
+
+def offset_between_dates(
+        start_date: str,
+        end_date: str,
+        offset_in_seconds: int,
+    ) -&gt; List[datetime]:
+    &#34;&#34;&#34;
+    Returns list of datetime objects separated by the given offset (between the given date-range).
+
+    &gt;&gt;&gt; offset_between_dates(
+            start_date=&#34;2019-05-15&#34;,
+            end_date=&#34;2019-05-16&#34;,
+            offset_in_seconds=60*60*8, # Equivalent of 8 hours
+        )
+
+    References:
+        - [Pandas date range](https://pandas.pydata.org/docs/reference/api/pandas.date_range.html)
+        - [Timeseries offset aliases](https://pandas.pydata.org/docs/user_guide/timeseries.html#timeseries-offset-aliases)
+    &#34;&#34;&#34;
+    raise_exception_if_invalid_type(
+        parameter_name=&#39;offset_in_seconds&#39;, parameter_value=offset_in_seconds, expected_type=int,
+    )
+    if offset_in_seconds &lt;= 0:
+        raise ValueError(f&#34;Expected `offset_in_seconds` to be &gt; 0, but got {offset_in_seconds}&#34;)
+    
+    dt_end_date = parse_date_string(date_string=end_date)
+    periods_objs = pd.period_range(
+        start=start_date,
+        end=to_date_string(dt_obj=dt_end_date + timedelta(days=1)),
+        freq=f&#34;{offset_in_seconds}S&#34;,
+    )
+    dt_objs = list(map(period_to_datetime, periods_objs))
+    if dt_objs[-1] == dt_end_date + timedelta(days=1):
+        dt_objs.pop() # Remove last item
+    return dt_objs
+
+
+def offset_between_datetimes(
+        start_timestamp: str,
+        end_timestamp: str,
+        offset_in_seconds: int,
+        include_start_timestamp: Optional[bool] = True,
+        include_end_timestamp: Optional[bool] = True,
+    ) -&gt; List[datetime]:
+    &#34;&#34;&#34;
+    Returns list of datetime objects separated by the given offset (between the given datetime-range).
+
+    &gt;&gt;&gt; offset_between_datetimes(
+            start_timestamp=&#34;2019-05-17 13:30:00&#34;,
+            end_timestamp=&#34;2019-05-17 22:30:00&#34;,
+            offset_in_seconds=60*60*1, # Equivalent of 1 hour
+        )
+
+    References:
+        - [Pandas date range](https://pandas.pydata.org/docs/reference/api/pandas.date_range.html)
+        - [Timeseries offset aliases](https://pandas.pydata.org/docs/user_guide/timeseries.html#timeseries-offset-aliases)
+    &#34;&#34;&#34;
+    raise_exception_if_invalid_type(
+        parameter_name=&#39;offset_in_seconds&#39;, parameter_value=offset_in_seconds, expected_type=int,
+    )
+    if offset_in_seconds &lt;= 0:
+        raise ValueError(f&#34;Expected `offset_in_seconds` to be &gt; 0, but got {offset_in_seconds}&#34;)
+    
+    periods_objs = pd.period_range(start=start_timestamp, end=end_timestamp, freq=f&#34;{offset_in_seconds}S&#34;)
+    dt_objs = list(map(period_to_datetime, periods_objs))
+    if not include_start_timestamp and dt_objs:
+        if start_timestamp == to_datetime_string(dt_obj=dt_objs[0]):
+            dt_objs.pop(0)
+    if not include_end_timestamp and dt_objs:
+        if end_timestamp == to_datetime_string(dt_obj=dt_objs[-1]):
+            dt_objs.pop(-1)
+    return dt_objs
+
+
+
+class DateWiseBucketer:
+    &#34;&#34;&#34;
+    Class that provides functionality to get date-wise buckets of date-ranges.
+    
+    &gt;&gt;&gt; dwb = DateWiseBucketer(
+            date_string=&#34;2020-01-01&#34;,
+            num_days_per_bucket=8,
+            num_buckets=3,
+        )
+    &gt;&gt;&gt; dwb.get_buckets(backward=False) # Returns [(&#39;2020-01-01&#39;, &#39;2020-01-08&#39;), (&#39;2020-01-09&#39;, &#39;2020-01-16&#39;), (&#39;2020-01-17&#39;, &#39;2020-01-24&#39;)]
+    &gt;&gt;&gt; dwb.get_buckets(backward=True) # Returns [(&#39;2019-12-09&#39;, &#39;2019-12-16&#39;), (&#39;2019-12-17&#39;, &#39;2019-12-24&#39;), (&#39;2019-12-25&#39;, &#39;2020-01-01&#39;)]
+    &#34;&#34;&#34;
+    
+    def __init__(
+            self,
+            date_string: str,
+            num_days_per_bucket: int,
+            num_buckets: int,
+        ) -&gt; None:
+        &#34;&#34;&#34;
+        Parameters:
+            - date_string (str): Date-string of format &#39;yyyy-mm-dd&#39;
+            - num_days_per_bucket (int): Number of days per bucket (must be &gt; 0)
+            - num_buckets (int): Number of buckets (must be &gt; 0)
+        &#34;&#34;&#34;
+        self.__raise_exception_if_invalid_input(
+            date_string=date_string,
+            num_days_per_bucket=num_days_per_bucket,
+            num_buckets=num_buckets,
+        )
+        self.date_string = date_string
+        self.num_days_per_bucket = num_days_per_bucket
+        self.num_buckets = num_buckets
+    
+    def __raise_exception_if_invalid_input(
+            self,
+            date_string: str,
+            num_days_per_bucket: int,
+            num_buckets: int,
+        ) -&gt; None:
+        &#34;&#34;&#34;Raises an exception if any of the given inputs are invalid; otherwise returns None&#34;&#34;&#34;
+        # Type errors
+        raise_exception_if_invalid_type(
+            parameter_name=&#39;date_string&#39;, parameter_value=date_string, expected_type=str,
+        )
+        raise_exception_if_invalid_type(
+            parameter_name=&#39;num_days_per_bucket&#39;, parameter_value=num_days_per_bucket, expected_type=int,
+        )
+        raise_exception_if_invalid_type(
+            parameter_name=&#39;num_buckets&#39;, parameter_value=num_buckets, expected_type=int,
+        )
+
+        # Value errors
+        try:
+            _ = datetime.strptime(date_string, DATE_STRING_FORMAT)
+        except ValueError:
+            raise ValueError(f&#34;Expected `date_string` to be a valid date string of format &#39;yyyy-mm-dd&#39;, but got &#39;{date_string}&#39;&#34;)
+        if num_days_per_bucket &lt;= 0:
+            raise ValueError(f&#34;Expected `num_days_per_bucket` to be &gt; 0, but got {num_days_per_bucket}&#34;)
+        if num_buckets &lt;= 0:
+            raise ValueError(f&#34;Expected `num_buckets` to be &gt; 0, but got {num_buckets}&#34;)
+        return None
+    
+    def __str__(self) -&gt; str:
+        return f&#34;DateWiseBucketer(date_string=&#39;{self.date_string}&#39;, num_days_per_bucket={self.num_days_per_bucket}, num_buckets={self.num_buckets})&#34;
+    
+    def get_buckets(
+            self,
+            backward: Optional[bool] = False,
+            as_type: Optional[str] = &#39;string&#39;,
+        ) -&gt; Union[List[Tuple[datetime, datetime]], List[Tuple[date, date]], List[Tuple[str, str]]]:
+        &#34;&#34;&#34;
+        Returns list of tuples of (start_date, end_date) buckets. They will always be in ascending order.
+        Options for `as_type` are: [&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;]. Default: &#39;string&#39;.
+        &#34;&#34;&#34;
+        raise_exception_if_invalid_option(
+            option_name=&#39;as_type&#39;,
+            option_value=as_type,
+            valid_option_values=[&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;],
+        )
+        freq = f&#34;-{self.num_days_per_bucket}D&#34; if backward else f&#34;{self.num_days_per_bucket}D&#34;
+        period_objs = pd.date_range(start=self.date_string, freq=freq, periods=self.num_buckets)
+        if backward:
+            dt_bucket_end_dates = sorted(list(map(period_to_datetime, period_objs)), reverse=False)
+            dt_bucket_start_dates = list(map(lambda dt_obj: dt_obj - timedelta(days=self.num_days_per_bucket - 1), dt_bucket_end_dates))
+        else:
+            dt_bucket_start_dates = sorted(list(map(period_to_datetime, period_objs)), reverse=False)
+        buckets = list(map(lambda dt_obj: (dt_obj, dt_obj + timedelta(days=self.num_days_per_bucket - 1)), dt_bucket_start_dates))
+        if as_type == &#39;date&#39;:
+            buckets = list(map(lambda bucket: (bucket[0].date(), bucket[1].date()), buckets))
+        elif as_type == &#39;string&#39;:
+            buckets = list(map(lambda bucket: (to_date_string(bucket[0]), to_date_string(bucket[1])), buckets))
+        return buckets
+
+
+
+class MonthWiseBucketer:
+    &#34;&#34;&#34;
+    Class that provides functionality to get month-wise buckets of date-ranges.
+    
+    &gt;&gt;&gt; mwb = MonthWiseBucketer(
+            year=2020,
+            month=1,
+            num_buckets=3,
+        )
+    &gt;&gt;&gt; mwb.get_buckets(backward=False) # Returns [(&#39;2020-01-01&#39;, &#39;2020-01-31&#39;), (&#39;2020-02-01&#39;, &#39;2020-02-29&#39;), (&#39;2020-03-01&#39;, &#39;2020-03-31&#39;)]
+    &gt;&gt;&gt; mwb.get_buckets(backward=True) # Returns [(&#39;2019-11-01&#39;, &#39;2019-11-30&#39;), (&#39;2019-12-01&#39;, &#39;2019-12-31&#39;), (&#39;2020-01-01&#39;, &#39;2020-01-31&#39;)]
+    &#34;&#34;&#34;
+
+    def __init__(
+            self,
+            year: int,
+            month: int,
+            num_buckets: int,
+        ) -&gt; None:
+        &#34;&#34;&#34;
+        Parameters:
+            - year (int): Year as integer
+            - month (int): Month as integer (Range: 1-12)
+            - num_buckets (int): Number of buckets (must be &gt; 0)
+        &#34;&#34;&#34;
+        self.__raise_exception_if_invalid_input(
+            year=year,
+            month=month,
+            num_buckets=num_buckets,
+        )
+        self.year = year
+        self.month = month
+        self.num_buckets = num_buckets
+    
+    def __raise_exception_if_invalid_input(
+            self,
+            year: int,
+            month: int,
+            num_buckets: int,
+        ) -&gt; None:
+        &#34;&#34;&#34;Raises an exception if any of the given inputs are invalid; otherwise returns None&#34;&#34;&#34;
+        # Type errors
+        raise_exception_if_invalid_type(
+            parameter_name=&#39;year&#39;, parameter_value=year, expected_type=int,
+        )
+        raise_exception_if_invalid_type(
+            parameter_name=&#39;month&#39;, parameter_value=month, expected_type=int,
+        )
+        raise_exception_if_invalid_type(
+            parameter_name=&#39;num_buckets&#39;, parameter_value=num_buckets, expected_type=int,
+        )
+        
+        # Value errors
+        if year &lt;= 0:
+            raise ValueError(f&#34;Expected `year` to be &gt; 0, but got {year}&#34;)
+        if not (1 &lt;= month &lt;= 12):
+            raise ValueError(f&#34;Expected `month` to be in range 1-12, but got {month}&#34;)
+        if num_buckets &lt;= 0:
+            raise ValueError(f&#34;Expected `num_buckets` to be &gt; 0, but got {num_buckets}&#34;)
+        return None
+    
+    def __str__(self) -&gt; str:
+        return f&#34;MonthWiseBucketer(year={self.year}, month={self.month}, num_buckets={self.num_buckets})&#34;
+    
+    def get_buckets(
+            self,
+            backward: Optional[bool] = False,
+            as_type: Optional[str] = &#39;string&#39;,
+        ) -&gt; Union[List[Tuple[datetime, datetime]], List[Tuple[date, date]], List[Tuple[str, str]]]:
+        &#34;&#34;&#34;
+        Returns list of tuples of (start_date, end_date) buckets. They will always be in ascending order.
+        Options for `as_type` are: [&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;]. Default: &#39;string&#39;.
+        &#34;&#34;&#34;
+        raise_exception_if_invalid_option(
+            option_name=&#39;as_type&#39;,
+            option_value=as_type,
+            valid_option_values=[&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;],
+        )
+        period_objs = pd.date_range(
+            start=datetime(year=self.year, month=self.month, day=1).strftime(DATE_STRING_FORMAT),
+            freq=&#34;-1M&#34; if backward else &#34;1M&#34;,
+            periods=self.num_buckets,
+        )
+        dt_bucket_end_dates = sorted(list(map(period_to_datetime, period_objs)), reverse=False)
+        buckets = list(map(lambda dt_obj: (dt_obj.replace(day=1), dt_obj), dt_bucket_end_dates))
+        if as_type == &#39;date&#39;:
+            buckets = list(map(lambda bucket: (bucket[0].date(), bucket[1].date()), buckets))
+        elif as_type == &#39;string&#39;:
+            buckets = list(map(lambda bucket: (to_date_string(bucket[0]), to_date_string(bucket[1])), buckets))
+        return buckets
+
+
+
+class SecondWiseBucketer:
+    &#34;&#34;&#34;
+    Class that provides functionality to get second-wise buckets of datetime-ranges.
+    
+    &gt;&gt;&gt; swb = SecondWiseBucketer(
+            start_timestamp=&#34;2019-05-18 17:00:00&#34;,
+            end_timestamp=&#34;2019-05-18 17:20:00&#34;,
+            offset_in_seconds=60*5, # Equivalent of 5 minutes
+        )
+    &gt;&gt;&gt; swb.get_buckets() # Returns [(&#39;2019-05-18 17:00:00&#39;, &#39;2019-05-18 17:05:00&#39;), (&#39;2019-05-18 17:05:00&#39;, &#39;2019-05-18 17:10:00&#39;), (&#39;2019-05-18 17:10:00&#39;, &#39;2019-05-18 17:15:00&#39;), (&#39;2019-05-18 17:15:00&#39;, &#39;2019-05-18 17:20:00&#39;)]
+    &#34;&#34;&#34;
+
+    def __init__(
+            self,
+            start_timestamp: str,
+            end_timestamp: str,
+            offset_in_seconds: int,
+        ) -&gt; None:
+        self.start_timestamp = start_timestamp
+        self.end_timestamp = end_timestamp
+        self.offset_in_seconds = offset_in_seconds
+    
+    def __str__(self) -&gt; str:
+        return f&#34;SecondWiseBucketer(start_timestamp=&#39;{self.start_timestamp}&#39;, end_timestamp=&#39;{self.end_timestamp}&#39;, offset_in_seconds={self.offset_in_seconds})&#34;
+    
+    def get_buckets(self, as_type: Optional[str] = &#39;string&#39;) -&gt; Union[List[Tuple[datetime, datetime]], List[Tuple[str, str]]]:
+        &#34;&#34;&#34;
+        Returns list of tuples of (start_timestamp, end_timestamp) buckets. They will always be in ascending order.
+        Options for `as_type` are: [&#39;datetime&#39;, &#39;string&#39;]. Default: &#39;string&#39;.
+        &#34;&#34;&#34;
+        raise_exception_if_invalid_option(
+            option_name=&#39;as_type&#39;,
+            option_value=as_type,
+            valid_option_values=[&#39;datetime&#39;, &#39;string&#39;],
+        )
+        timestamps = offset_between_datetimes(
+            start_timestamp=self.start_timestamp,
+            end_timestamp=self.end_timestamp,
+            offset_in_seconds=self.offset_in_seconds,
+            include_start_timestamp=True,
+            include_end_timestamp=True,
+        )
+        if as_type == &#39;string&#39;:
+            timestamps = list(map(to_datetime_string, timestamps))
+        buckets = [(timestamps[idx], timestamps[idx + 1]) for idx in range(len(timestamps) - 1)]
+        return buckets</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="helperpy.core.date_ops.convert_to_datetime"><code class="name flex">
+<span>def <span class="ident">convert_to_datetime</span></span>(<span>date_string: str, hour: int, minute: int, second: int) ‑> datetime.datetime</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="parameters">Parameters</h2>
+<ul>
+<li>date_string (str): Date string of format "yyyy-mm-dd"</li>
+<li>hour (int): Ranges from 0 to 23, indicating hour of the day</li>
+<li>minute (int): Ranges from 0 to 59, indicating minute of the hour</li>
+<li>second (int): Ranges from 0 to 59, indicating second of the minute</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def convert_to_datetime(
+        date_string: str,
+        hour: int,
+        minute: int,
+        second: int,
+    ) -&gt; datetime:
+    &#34;&#34;&#34;
+    Parameters:
+        - date_string (str): Date string of format &#34;yyyy-mm-dd&#34;
+        - hour (int): Ranges from 0 to 23, indicating hour of the day
+        - minute (int): Ranges from 0 to 59, indicating minute of the hour
+        - second (int): Ranges from 0 to 59, indicating second of the minute
+    &#34;&#34;&#34;
+    dt_obj = parse_date_string(date_string=date_string).replace(
+        hour=hour,
+        minute=minute,
+        second=second,
+    )
+    return dt_obj</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.convert_to_naive_timezone"><code class="name flex">
+<span>def <span class="ident">convert_to_naive_timezone</span></span>(<span>dt_obj: datetime.datetime) ‑> datetime.datetime</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Converts datetime object to datetime object with a naive timezone</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def convert_to_naive_timezone(dt_obj: datetime) -&gt; datetime:
+    &#34;&#34;&#34;Converts datetime object to datetime object with a naive timezone&#34;&#34;&#34;
+    dt_obj_naive_tz = dt_obj.replace(tzinfo=None)
+    return dt_obj_naive_tz</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.get_current_timestamp_as_integer"><code class="name flex">
+<span>def <span class="ident">get_current_timestamp_as_integer</span></span>(<span>) ‑> int</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns current timestamp as an integer (Format: yyyymmddhhmmss)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_current_timestamp_as_integer() -&gt; int:
+    &#34;&#34;&#34;Returns current timestamp as an integer (Format: yyyymmddhhmmss)&#34;&#34;&#34;
+    dt_obj = datetime.now()
+    ts_now = dt_obj.strftime(TIMESTAMP_INTEGER_FORMAT)
+    return int(ts_now)</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.get_dates_between"><code class="name flex">
+<span>def <span class="ident">get_dates_between</span></span>(<span>start_date: str, end_date: str, as_type: Optional[str] = 'string') ‑> Union[List[datetime.datetime], List[datetime.date], List[str]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns list of dates between the given <code>start_date</code> and <code>end_date</code>.
+Input date-string format must be 'yyyy-mm-dd'.
+Options for <code>as_type</code> are: ['date', 'datetime', 'string']. Default: 'string'.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_dates_between(
+        start_date: str,
+        end_date: str,
+        as_type: Optional[str] = &#39;string&#39;,
+    ) -&gt; Union[List[datetime], List[date], List[str]]:
+    &#34;&#34;&#34;
+    Returns list of dates between the given `start_date` and `end_date`.
+    Input date-string format must be &#39;yyyy-mm-dd&#39;.
+    Options for `as_type` are: [&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;]. Default: &#39;string&#39;.
+    &#34;&#34;&#34;
+    raise_exception_if_invalid_option(
+        option_name=&#39;as_type&#39;,
+        option_value=as_type,
+        valid_option_values=[&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;],
+    )
+    period_objs = pd.date_range(start=start_date, end=end_date, freq=&#39;1D&#39;)
+    func_mapper = {
+        &#39;date&#39;: lambda period_obj: period_to_datetime(period_obj=period_obj).date(),
+        &#39;datetime&#39;: lambda period_obj: period_to_datetime(period_obj=period_obj),
+        &#39;string&#39;: lambda period_obj: to_date_string(dt_obj=period_to_datetime(period_obj=period_obj)),
+    }
+    return list(map(func_mapper[as_type], period_objs))</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.get_day_of_week"><code class="name flex">
+<span>def <span class="ident">get_day_of_week</span></span>(<span>dt_obj: datetime.date, shorten: Optional[bool] = False) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the day of the week.
+Day of week options when <code>shorten</code> is set to False: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].
+Day of week options when <code>shorten</code> is set to True: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_day_of_week(
+        dt_obj: Union[datetime, date],
+        shorten: Optional[bool] = False,
+    ) -&gt; str:
+    &#34;&#34;&#34;
+    Returns the day of the week.
+    Day of week options when `shorten` is set to False: [&#39;Monday&#39;, &#39;Tuesday&#39;, &#39;Wednesday&#39;, &#39;Thursday&#39;, &#39;Friday&#39;, &#39;Saturday&#39;, &#39;Sunday&#39;].
+    Day of week options when `shorten` is set to True: [&#39;Mon&#39;, &#39;Tue&#39;, &#39;Wed&#39;, &#39;Thu&#39;, &#39;Fri&#39;, &#39;Sat&#39;, &#39;Sun&#39;].
+    &#34;&#34;&#34;
+    if shorten:
+        return dt_obj.strftime(&#34;%a&#34;)
+    return dt_obj.strftime(&#34;%A&#34;)</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.get_random_timestamp"><code class="name flex">
+<span>def <span class="ident">get_random_timestamp</span></span>(<span>start_year: Optional[int] = 1800, end_year: Optional[int] = 2200) ‑> datetime.datetime</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_random_timestamp(
+        start_year: Optional[int] = 1800,
+        end_year: Optional[int] = 2200,
+    ) -&gt; datetime:
+    return datetime.strptime(randomtimestamp(start_year=start_year, end_year=end_year), &#34;%d-%m-%Y %H:%M:%S&#34;)</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.get_random_timestamp_as_integer"><code class="name flex">
+<span>def <span class="ident">get_random_timestamp_as_integer</span></span>(<span>) ‑> int</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns random timestamp as an integer (Format: yyyymmddhhmmss)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_random_timestamp_as_integer() -&gt; int:
+    &#34;&#34;&#34;Returns random timestamp as an integer (Format: yyyymmddhhmmss)&#34;&#34;&#34;
+    ts_random = randomtimestamp(
+        start_year=1900,
+        end_year=datetime.now().year - 1,
+        pattern=TIMESTAMP_INTEGER_FORMAT,
+    )
+    return int(ts_random)</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.ist_to_utc"><code class="name flex">
+<span>def <span class="ident">ist_to_utc</span></span>(<span>dt_obj: datetime.datetime) ‑> datetime.datetime</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Subtracts 5 hours and 30 minutes from datetime object</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ist_to_utc(dt_obj: datetime) -&gt; datetime:
+    &#34;&#34;&#34;Subtracts 5 hours and 30 minutes from datetime object&#34;&#34;&#34;
+    return dt_obj - timedelta(hours=5, minutes=30)</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.offset_between_dates"><code class="name flex">
+<span>def <span class="ident">offset_between_dates</span></span>(<span>start_date: str, end_date: str, offset_in_seconds: int) ‑> List[datetime.datetime]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns list of datetime objects separated by the given offset (between the given date-range).</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; offset_between_dates(
+        start_date=&quot;2019-05-15&quot;,
+        end_date=&quot;2019-05-16&quot;,
+        offset_in_seconds=60*60*8, # Equivalent of 8 hours
+    )
+</code></pre>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://pandas.pydata.org/docs/reference/api/pandas.date_range.html">Pandas date range</a></li>
+<li><a href="https://pandas.pydata.org/docs/user_guide/timeseries.html#timeseries-offset-aliases">Timeseries offset aliases</a></li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def offset_between_dates(
+        start_date: str,
+        end_date: str,
+        offset_in_seconds: int,
+    ) -&gt; List[datetime]:
+    &#34;&#34;&#34;
+    Returns list of datetime objects separated by the given offset (between the given date-range).
+
+    &gt;&gt;&gt; offset_between_dates(
+            start_date=&#34;2019-05-15&#34;,
+            end_date=&#34;2019-05-16&#34;,
+            offset_in_seconds=60*60*8, # Equivalent of 8 hours
+        )
+
+    References:
+        - [Pandas date range](https://pandas.pydata.org/docs/reference/api/pandas.date_range.html)
+        - [Timeseries offset aliases](https://pandas.pydata.org/docs/user_guide/timeseries.html#timeseries-offset-aliases)
+    &#34;&#34;&#34;
+    raise_exception_if_invalid_type(
+        parameter_name=&#39;offset_in_seconds&#39;, parameter_value=offset_in_seconds, expected_type=int,
+    )
+    if offset_in_seconds &lt;= 0:
+        raise ValueError(f&#34;Expected `offset_in_seconds` to be &gt; 0, but got {offset_in_seconds}&#34;)
+    
+    dt_end_date = parse_date_string(date_string=end_date)
+    periods_objs = pd.period_range(
+        start=start_date,
+        end=to_date_string(dt_obj=dt_end_date + timedelta(days=1)),
+        freq=f&#34;{offset_in_seconds}S&#34;,
+    )
+    dt_objs = list(map(period_to_datetime, periods_objs))
+    if dt_objs[-1] == dt_end_date + timedelta(days=1):
+        dt_objs.pop() # Remove last item
+    return dt_objs</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.offset_between_datetimes"><code class="name flex">
+<span>def <span class="ident">offset_between_datetimes</span></span>(<span>start_timestamp: str, end_timestamp: str, offset_in_seconds: int, include_start_timestamp: Optional[bool] = True, include_end_timestamp: Optional[bool] = True) ‑> List[datetime.datetime]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns list of datetime objects separated by the given offset (between the given datetime-range).</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; offset_between_datetimes(
+        start_timestamp=&quot;2019-05-17 13:30:00&quot;,
+        end_timestamp=&quot;2019-05-17 22:30:00&quot;,
+        offset_in_seconds=60*60*1, # Equivalent of 1 hour
+    )
+</code></pre>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://pandas.pydata.org/docs/reference/api/pandas.date_range.html">Pandas date range</a></li>
+<li><a href="https://pandas.pydata.org/docs/user_guide/timeseries.html#timeseries-offset-aliases">Timeseries offset aliases</a></li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def offset_between_datetimes(
+        start_timestamp: str,
+        end_timestamp: str,
+        offset_in_seconds: int,
+        include_start_timestamp: Optional[bool] = True,
+        include_end_timestamp: Optional[bool] = True,
+    ) -&gt; List[datetime]:
+    &#34;&#34;&#34;
+    Returns list of datetime objects separated by the given offset (between the given datetime-range).
+
+    &gt;&gt;&gt; offset_between_datetimes(
+            start_timestamp=&#34;2019-05-17 13:30:00&#34;,
+            end_timestamp=&#34;2019-05-17 22:30:00&#34;,
+            offset_in_seconds=60*60*1, # Equivalent of 1 hour
+        )
+
+    References:
+        - [Pandas date range](https://pandas.pydata.org/docs/reference/api/pandas.date_range.html)
+        - [Timeseries offset aliases](https://pandas.pydata.org/docs/user_guide/timeseries.html#timeseries-offset-aliases)
+    &#34;&#34;&#34;
+    raise_exception_if_invalid_type(
+        parameter_name=&#39;offset_in_seconds&#39;, parameter_value=offset_in_seconds, expected_type=int,
+    )
+    if offset_in_seconds &lt;= 0:
+        raise ValueError(f&#34;Expected `offset_in_seconds` to be &gt; 0, but got {offset_in_seconds}&#34;)
+    
+    periods_objs = pd.period_range(start=start_timestamp, end=end_timestamp, freq=f&#34;{offset_in_seconds}S&#34;)
+    dt_objs = list(map(period_to_datetime, periods_objs))
+    if not include_start_timestamp and dt_objs:
+        if start_timestamp == to_datetime_string(dt_obj=dt_objs[0]):
+            dt_objs.pop(0)
+    if not include_end_timestamp and dt_objs:
+        if end_timestamp == to_datetime_string(dt_obj=dt_objs[-1]):
+            dt_objs.pop(-1)
+    return dt_objs</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.parse_date_string"><code class="name flex">
+<span>def <span class="ident">parse_date_string</span></span>(<span>date_string: str) ‑> datetime.datetime</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Parses date string of format 'yyyy-mm-dd' into datetime object.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; parse_date_string(date_string=&quot;2020-03-28&quot;)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def parse_date_string(date_string: str) -&gt; datetime:
+    &#34;&#34;&#34;
+    Parses date string of format &#39;yyyy-mm-dd&#39; into datetime object.
+    &gt;&gt;&gt; parse_date_string(date_string=&#34;2020-03-28&#34;)
+    &#34;&#34;&#34;
+    dt_obj = datetime.strptime(date_string, DATE_STRING_FORMAT)
+    return dt_obj</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.parse_datetime_string"><code class="name flex">
+<span>def <span class="ident">parse_datetime_string</span></span>(<span>datetime_string: str) ‑> datetime.datetime</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Parses datetime string of format 'yyyy-mm-dd hh:mm:ss' into datetime object.
+Note: The 'hour' in the <code>datetime_string</code> must be of 24 hour format (from 0-23).</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; parse_datetime_string(datetime_string=&quot;2020-03-28 17:53:04&quot;)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def parse_datetime_string(datetime_string: str) -&gt; datetime:
+    &#34;&#34;&#34;
+    Parses datetime string of format &#39;yyyy-mm-dd hh:mm:ss&#39; into datetime object.
+    Note: The &#39;hour&#39; in the `datetime_string` must be of 24 hour format (from 0-23).
+    &gt;&gt;&gt; parse_datetime_string(datetime_string=&#34;2020-03-28 17:53:04&#34;)
+    &#34;&#34;&#34;
+    dt_obj = datetime.strptime(datetime_string, DATETIME_STRING_FORMAT)
+    return dt_obj</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.period_to_datetime"><code class="name flex">
+<span>def <span class="ident">period_to_datetime</span></span>(<span>period_obj: pandas._libs.tslibs.period.Period) ‑> datetime.datetime</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Converts Pandas period object to datetime object</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def period_to_datetime(period_obj: pd._libs.tslibs.period.Period) -&gt; datetime:
+    &#34;&#34;&#34;Converts Pandas period object to datetime object&#34;&#34;&#34;
+    dt_obj = datetime(
+        year=period_obj.year,
+        month=period_obj.month,
+        day=period_obj.day,
+        hour=period_obj.hour,
+        minute=period_obj.minute,
+        second=period_obj.second,
+    )
+    return dt_obj</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.to_date_string"><code class="name flex">
+<span>def <span class="ident">to_date_string</span></span>(<span>dt_obj: datetime.datetime) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Converts datetime object to date string of format 'yyyy-mm-dd'</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_date_string(dt_obj: datetime) -&gt; str:
+    &#34;&#34;&#34;Converts datetime object to date string of format &#39;yyyy-mm-dd&#39;&#34;&#34;&#34;
+    date_string = dt_obj.strftime(DATE_STRING_FORMAT)
+    return date_string</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.to_datetime_string"><code class="name flex">
+<span>def <span class="ident">to_datetime_string</span></span>(<span>dt_obj: datetime.datetime) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Converts datetime object to datetime string of format 'yyyy-mm-dd hh:mm:ss'</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_datetime_string(dt_obj: datetime) -&gt; str:
+    &#34;&#34;&#34;Converts datetime object to datetime string of format &#39;yyyy-mm-dd hh:mm:ss&#39;&#34;&#34;&#34;
+    datetime_string = dt_obj.strftime(DATETIME_STRING_FORMAT)
+    return datetime_string</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.date_ops.utc_to_ist"><code class="name flex">
+<span>def <span class="ident">utc_to_ist</span></span>(<span>dt_obj: datetime.datetime) ‑> datetime.datetime</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds 5 hours and 30 minutes to datetime object</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def utc_to_ist(dt_obj: datetime) -&gt; datetime:
+    &#34;&#34;&#34;Adds 5 hours and 30 minutes to datetime object&#34;&#34;&#34;
+    return dt_obj + timedelta(hours=5, minutes=30)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="helperpy.core.date_ops.DateWiseBucketer"><code class="flex name class">
+<span>class <span class="ident">DateWiseBucketer</span></span>
+<span>(</span><span>date_string: str, num_days_per_bucket: int, num_buckets: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class that provides functionality to get date-wise buckets of date-ranges.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; dwb = DateWiseBucketer(
+        date_string=&quot;2020-01-01&quot;,
+        num_days_per_bucket=8,
+        num_buckets=3,
+    )
+&gt;&gt;&gt; dwb.get_buckets(backward=False) # Returns [('2020-01-01', '2020-01-08'), ('2020-01-09', '2020-01-16'), ('2020-01-17', '2020-01-24')]
+&gt;&gt;&gt; dwb.get_buckets(backward=True) # Returns [('2019-12-09', '2019-12-16'), ('2019-12-17', '2019-12-24'), ('2019-12-25', '2020-01-01')]
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<ul>
+<li>date_string (str): Date-string of format 'yyyy-mm-dd'</li>
+<li>num_days_per_bucket (int): Number of days per bucket (must be &gt; 0)</li>
+<li>num_buckets (int): Number of buckets (must be &gt; 0)</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DateWiseBucketer:
+    &#34;&#34;&#34;
+    Class that provides functionality to get date-wise buckets of date-ranges.
+    
+    &gt;&gt;&gt; dwb = DateWiseBucketer(
+            date_string=&#34;2020-01-01&#34;,
+            num_days_per_bucket=8,
+            num_buckets=3,
+        )
+    &gt;&gt;&gt; dwb.get_buckets(backward=False) # Returns [(&#39;2020-01-01&#39;, &#39;2020-01-08&#39;), (&#39;2020-01-09&#39;, &#39;2020-01-16&#39;), (&#39;2020-01-17&#39;, &#39;2020-01-24&#39;)]
+    &gt;&gt;&gt; dwb.get_buckets(backward=True) # Returns [(&#39;2019-12-09&#39;, &#39;2019-12-16&#39;), (&#39;2019-12-17&#39;, &#39;2019-12-24&#39;), (&#39;2019-12-25&#39;, &#39;2020-01-01&#39;)]
+    &#34;&#34;&#34;
+    
+    def __init__(
+            self,
+            date_string: str,
+            num_days_per_bucket: int,
+            num_buckets: int,
+        ) -&gt; None:
+        &#34;&#34;&#34;
+        Parameters:
+            - date_string (str): Date-string of format &#39;yyyy-mm-dd&#39;
+            - num_days_per_bucket (int): Number of days per bucket (must be &gt; 0)
+            - num_buckets (int): Number of buckets (must be &gt; 0)
+        &#34;&#34;&#34;
+        self.__raise_exception_if_invalid_input(
+            date_string=date_string,
+            num_days_per_bucket=num_days_per_bucket,
+            num_buckets=num_buckets,
+        )
+        self.date_string = date_string
+        self.num_days_per_bucket = num_days_per_bucket
+        self.num_buckets = num_buckets
+    
+    def __raise_exception_if_invalid_input(
+            self,
+            date_string: str,
+            num_days_per_bucket: int,
+            num_buckets: int,
+        ) -&gt; None:
+        &#34;&#34;&#34;Raises an exception if any of the given inputs are invalid; otherwise returns None&#34;&#34;&#34;
+        # Type errors
+        raise_exception_if_invalid_type(
+            parameter_name=&#39;date_string&#39;, parameter_value=date_string, expected_type=str,
+        )
+        raise_exception_if_invalid_type(
+            parameter_name=&#39;num_days_per_bucket&#39;, parameter_value=num_days_per_bucket, expected_type=int,
+        )
+        raise_exception_if_invalid_type(
+            parameter_name=&#39;num_buckets&#39;, parameter_value=num_buckets, expected_type=int,
+        )
+
+        # Value errors
+        try:
+            _ = datetime.strptime(date_string, DATE_STRING_FORMAT)
+        except ValueError:
+            raise ValueError(f&#34;Expected `date_string` to be a valid date string of format &#39;yyyy-mm-dd&#39;, but got &#39;{date_string}&#39;&#34;)
+        if num_days_per_bucket &lt;= 0:
+            raise ValueError(f&#34;Expected `num_days_per_bucket` to be &gt; 0, but got {num_days_per_bucket}&#34;)
+        if num_buckets &lt;= 0:
+            raise ValueError(f&#34;Expected `num_buckets` to be &gt; 0, but got {num_buckets}&#34;)
+        return None
+    
+    def __str__(self) -&gt; str:
+        return f&#34;DateWiseBucketer(date_string=&#39;{self.date_string}&#39;, num_days_per_bucket={self.num_days_per_bucket}, num_buckets={self.num_buckets})&#34;
+    
+    def get_buckets(
+            self,
+            backward: Optional[bool] = False,
+            as_type: Optional[str] = &#39;string&#39;,
+        ) -&gt; Union[List[Tuple[datetime, datetime]], List[Tuple[date, date]], List[Tuple[str, str]]]:
+        &#34;&#34;&#34;
+        Returns list of tuples of (start_date, end_date) buckets. They will always be in ascending order.
+        Options for `as_type` are: [&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;]. Default: &#39;string&#39;.
+        &#34;&#34;&#34;
+        raise_exception_if_invalid_option(
+            option_name=&#39;as_type&#39;,
+            option_value=as_type,
+            valid_option_values=[&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;],
+        )
+        freq = f&#34;-{self.num_days_per_bucket}D&#34; if backward else f&#34;{self.num_days_per_bucket}D&#34;
+        period_objs = pd.date_range(start=self.date_string, freq=freq, periods=self.num_buckets)
+        if backward:
+            dt_bucket_end_dates = sorted(list(map(period_to_datetime, period_objs)), reverse=False)
+            dt_bucket_start_dates = list(map(lambda dt_obj: dt_obj - timedelta(days=self.num_days_per_bucket - 1), dt_bucket_end_dates))
+        else:
+            dt_bucket_start_dates = sorted(list(map(period_to_datetime, period_objs)), reverse=False)
+        buckets = list(map(lambda dt_obj: (dt_obj, dt_obj + timedelta(days=self.num_days_per_bucket - 1)), dt_bucket_start_dates))
+        if as_type == &#39;date&#39;:
+            buckets = list(map(lambda bucket: (bucket[0].date(), bucket[1].date()), buckets))
+        elif as_type == &#39;string&#39;:
+            buckets = list(map(lambda bucket: (to_date_string(bucket[0]), to_date_string(bucket[1])), buckets))
+        return buckets</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="helperpy.core.date_ops.DateWiseBucketer.get_buckets"><code class="name flex">
+<span>def <span class="ident">get_buckets</span></span>(<span>self, backward: Optional[bool] = False, as_type: Optional[str] = 'string') ‑> Union[List[Tuple[datetime.datetime, datetime.datetime]], List[Tuple[datetime.date, datetime.date]], List[Tuple[str, str]]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns list of tuples of (start_date, end_date) buckets. They will always be in ascending order.
+Options for <code>as_type</code> are: ['date', 'datetime', 'string']. Default: 'string'.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_buckets(
+        self,
+        backward: Optional[bool] = False,
+        as_type: Optional[str] = &#39;string&#39;,
+    ) -&gt; Union[List[Tuple[datetime, datetime]], List[Tuple[date, date]], List[Tuple[str, str]]]:
+    &#34;&#34;&#34;
+    Returns list of tuples of (start_date, end_date) buckets. They will always be in ascending order.
+    Options for `as_type` are: [&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;]. Default: &#39;string&#39;.
+    &#34;&#34;&#34;
+    raise_exception_if_invalid_option(
+        option_name=&#39;as_type&#39;,
+        option_value=as_type,
+        valid_option_values=[&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;],
+    )
+    freq = f&#34;-{self.num_days_per_bucket}D&#34; if backward else f&#34;{self.num_days_per_bucket}D&#34;
+    period_objs = pd.date_range(start=self.date_string, freq=freq, periods=self.num_buckets)
+    if backward:
+        dt_bucket_end_dates = sorted(list(map(period_to_datetime, period_objs)), reverse=False)
+        dt_bucket_start_dates = list(map(lambda dt_obj: dt_obj - timedelta(days=self.num_days_per_bucket - 1), dt_bucket_end_dates))
+    else:
+        dt_bucket_start_dates = sorted(list(map(period_to_datetime, period_objs)), reverse=False)
+    buckets = list(map(lambda dt_obj: (dt_obj, dt_obj + timedelta(days=self.num_days_per_bucket - 1)), dt_bucket_start_dates))
+    if as_type == &#39;date&#39;:
+        buckets = list(map(lambda bucket: (bucket[0].date(), bucket[1].date()), buckets))
+    elif as_type == &#39;string&#39;:
+        buckets = list(map(lambda bucket: (to_date_string(bucket[0]), to_date_string(bucket[1])), buckets))
+    return buckets</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="helperpy.core.date_ops.MonthWiseBucketer"><code class="flex name class">
+<span>class <span class="ident">MonthWiseBucketer</span></span>
+<span>(</span><span>year: int, month: int, num_buckets: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class that provides functionality to get month-wise buckets of date-ranges.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; mwb = MonthWiseBucketer(
+        year=2020,
+        month=1,
+        num_buckets=3,
+    )
+&gt;&gt;&gt; mwb.get_buckets(backward=False) # Returns [('2020-01-01', '2020-01-31'), ('2020-02-01', '2020-02-29'), ('2020-03-01', '2020-03-31')]
+&gt;&gt;&gt; mwb.get_buckets(backward=True) # Returns [('2019-11-01', '2019-11-30'), ('2019-12-01', '2019-12-31'), ('2020-01-01', '2020-01-31')]
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<ul>
+<li>year (int): Year as integer</li>
+<li>month (int): Month as integer (Range: 1-12)</li>
+<li>num_buckets (int): Number of buckets (must be &gt; 0)</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MonthWiseBucketer:
+    &#34;&#34;&#34;
+    Class that provides functionality to get month-wise buckets of date-ranges.
+    
+    &gt;&gt;&gt; mwb = MonthWiseBucketer(
+            year=2020,
+            month=1,
+            num_buckets=3,
+        )
+    &gt;&gt;&gt; mwb.get_buckets(backward=False) # Returns [(&#39;2020-01-01&#39;, &#39;2020-01-31&#39;), (&#39;2020-02-01&#39;, &#39;2020-02-29&#39;), (&#39;2020-03-01&#39;, &#39;2020-03-31&#39;)]
+    &gt;&gt;&gt; mwb.get_buckets(backward=True) # Returns [(&#39;2019-11-01&#39;, &#39;2019-11-30&#39;), (&#39;2019-12-01&#39;, &#39;2019-12-31&#39;), (&#39;2020-01-01&#39;, &#39;2020-01-31&#39;)]
+    &#34;&#34;&#34;
+
+    def __init__(
+            self,
+            year: int,
+            month: int,
+            num_buckets: int,
+        ) -&gt; None:
+        &#34;&#34;&#34;
+        Parameters:
+            - year (int): Year as integer
+            - month (int): Month as integer (Range: 1-12)
+            - num_buckets (int): Number of buckets (must be &gt; 0)
+        &#34;&#34;&#34;
+        self.__raise_exception_if_invalid_input(
+            year=year,
+            month=month,
+            num_buckets=num_buckets,
+        )
+        self.year = year
+        self.month = month
+        self.num_buckets = num_buckets
+    
+    def __raise_exception_if_invalid_input(
+            self,
+            year: int,
+            month: int,
+            num_buckets: int,
+        ) -&gt; None:
+        &#34;&#34;&#34;Raises an exception if any of the given inputs are invalid; otherwise returns None&#34;&#34;&#34;
+        # Type errors
+        raise_exception_if_invalid_type(
+            parameter_name=&#39;year&#39;, parameter_value=year, expected_type=int,
+        )
+        raise_exception_if_invalid_type(
+            parameter_name=&#39;month&#39;, parameter_value=month, expected_type=int,
+        )
+        raise_exception_if_invalid_type(
+            parameter_name=&#39;num_buckets&#39;, parameter_value=num_buckets, expected_type=int,
+        )
+        
+        # Value errors
+        if year &lt;= 0:
+            raise ValueError(f&#34;Expected `year` to be &gt; 0, but got {year}&#34;)
+        if not (1 &lt;= month &lt;= 12):
+            raise ValueError(f&#34;Expected `month` to be in range 1-12, but got {month}&#34;)
+        if num_buckets &lt;= 0:
+            raise ValueError(f&#34;Expected `num_buckets` to be &gt; 0, but got {num_buckets}&#34;)
+        return None
+    
+    def __str__(self) -&gt; str:
+        return f&#34;MonthWiseBucketer(year={self.year}, month={self.month}, num_buckets={self.num_buckets})&#34;
+    
+    def get_buckets(
+            self,
+            backward: Optional[bool] = False,
+            as_type: Optional[str] = &#39;string&#39;,
+        ) -&gt; Union[List[Tuple[datetime, datetime]], List[Tuple[date, date]], List[Tuple[str, str]]]:
+        &#34;&#34;&#34;
+        Returns list of tuples of (start_date, end_date) buckets. They will always be in ascending order.
+        Options for `as_type` are: [&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;]. Default: &#39;string&#39;.
+        &#34;&#34;&#34;
+        raise_exception_if_invalid_option(
+            option_name=&#39;as_type&#39;,
+            option_value=as_type,
+            valid_option_values=[&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;],
+        )
+        period_objs = pd.date_range(
+            start=datetime(year=self.year, month=self.month, day=1).strftime(DATE_STRING_FORMAT),
+            freq=&#34;-1M&#34; if backward else &#34;1M&#34;,
+            periods=self.num_buckets,
+        )
+        dt_bucket_end_dates = sorted(list(map(period_to_datetime, period_objs)), reverse=False)
+        buckets = list(map(lambda dt_obj: (dt_obj.replace(day=1), dt_obj), dt_bucket_end_dates))
+        if as_type == &#39;date&#39;:
+            buckets = list(map(lambda bucket: (bucket[0].date(), bucket[1].date()), buckets))
+        elif as_type == &#39;string&#39;:
+            buckets = list(map(lambda bucket: (to_date_string(bucket[0]), to_date_string(bucket[1])), buckets))
+        return buckets</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="helperpy.core.date_ops.MonthWiseBucketer.get_buckets"><code class="name flex">
+<span>def <span class="ident">get_buckets</span></span>(<span>self, backward: Optional[bool] = False, as_type: Optional[str] = 'string') ‑> Union[List[Tuple[datetime.datetime, datetime.datetime]], List[Tuple[datetime.date, datetime.date]], List[Tuple[str, str]]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns list of tuples of (start_date, end_date) buckets. They will always be in ascending order.
+Options for <code>as_type</code> are: ['date', 'datetime', 'string']. Default: 'string'.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_buckets(
+        self,
+        backward: Optional[bool] = False,
+        as_type: Optional[str] = &#39;string&#39;,
+    ) -&gt; Union[List[Tuple[datetime, datetime]], List[Tuple[date, date]], List[Tuple[str, str]]]:
+    &#34;&#34;&#34;
+    Returns list of tuples of (start_date, end_date) buckets. They will always be in ascending order.
+    Options for `as_type` are: [&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;]. Default: &#39;string&#39;.
+    &#34;&#34;&#34;
+    raise_exception_if_invalid_option(
+        option_name=&#39;as_type&#39;,
+        option_value=as_type,
+        valid_option_values=[&#39;date&#39;, &#39;datetime&#39;, &#39;string&#39;],
+    )
+    period_objs = pd.date_range(
+        start=datetime(year=self.year, month=self.month, day=1).strftime(DATE_STRING_FORMAT),
+        freq=&#34;-1M&#34; if backward else &#34;1M&#34;,
+        periods=self.num_buckets,
+    )
+    dt_bucket_end_dates = sorted(list(map(period_to_datetime, period_objs)), reverse=False)
+    buckets = list(map(lambda dt_obj: (dt_obj.replace(day=1), dt_obj), dt_bucket_end_dates))
+    if as_type == &#39;date&#39;:
+        buckets = list(map(lambda bucket: (bucket[0].date(), bucket[1].date()), buckets))
+    elif as_type == &#39;string&#39;:
+        buckets = list(map(lambda bucket: (to_date_string(bucket[0]), to_date_string(bucket[1])), buckets))
+    return buckets</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="helperpy.core.date_ops.SecondWiseBucketer"><code class="flex name class">
+<span>class <span class="ident">SecondWiseBucketer</span></span>
+<span>(</span><span>start_timestamp: str, end_timestamp: str, offset_in_seconds: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class that provides functionality to get second-wise buckets of datetime-ranges.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; swb = SecondWiseBucketer(
+        start_timestamp=&quot;2019-05-18 17:00:00&quot;,
+        end_timestamp=&quot;2019-05-18 17:20:00&quot;,
+        offset_in_seconds=60*5, # Equivalent of 5 minutes
+    )
+&gt;&gt;&gt; swb.get_buckets() # Returns [('2019-05-18 17:00:00', '2019-05-18 17:05:00'), ('2019-05-18 17:05:00', '2019-05-18 17:10:00'), ('2019-05-18 17:10:00', '2019-05-18 17:15:00'), ('2019-05-18 17:15:00', '2019-05-18 17:20:00')]
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SecondWiseBucketer:
+    &#34;&#34;&#34;
+    Class that provides functionality to get second-wise buckets of datetime-ranges.
+    
+    &gt;&gt;&gt; swb = SecondWiseBucketer(
+            start_timestamp=&#34;2019-05-18 17:00:00&#34;,
+            end_timestamp=&#34;2019-05-18 17:20:00&#34;,
+            offset_in_seconds=60*5, # Equivalent of 5 minutes
+        )
+    &gt;&gt;&gt; swb.get_buckets() # Returns [(&#39;2019-05-18 17:00:00&#39;, &#39;2019-05-18 17:05:00&#39;), (&#39;2019-05-18 17:05:00&#39;, &#39;2019-05-18 17:10:00&#39;), (&#39;2019-05-18 17:10:00&#39;, &#39;2019-05-18 17:15:00&#39;), (&#39;2019-05-18 17:15:00&#39;, &#39;2019-05-18 17:20:00&#39;)]
+    &#34;&#34;&#34;
+
+    def __init__(
+            self,
+            start_timestamp: str,
+            end_timestamp: str,
+            offset_in_seconds: int,
+        ) -&gt; None:
+        self.start_timestamp = start_timestamp
+        self.end_timestamp = end_timestamp
+        self.offset_in_seconds = offset_in_seconds
+    
+    def __str__(self) -&gt; str:
+        return f&#34;SecondWiseBucketer(start_timestamp=&#39;{self.start_timestamp}&#39;, end_timestamp=&#39;{self.end_timestamp}&#39;, offset_in_seconds={self.offset_in_seconds})&#34;
+    
+    def get_buckets(self, as_type: Optional[str] = &#39;string&#39;) -&gt; Union[List[Tuple[datetime, datetime]], List[Tuple[str, str]]]:
+        &#34;&#34;&#34;
+        Returns list of tuples of (start_timestamp, end_timestamp) buckets. They will always be in ascending order.
+        Options for `as_type` are: [&#39;datetime&#39;, &#39;string&#39;]. Default: &#39;string&#39;.
+        &#34;&#34;&#34;
+        raise_exception_if_invalid_option(
+            option_name=&#39;as_type&#39;,
+            option_value=as_type,
+            valid_option_values=[&#39;datetime&#39;, &#39;string&#39;],
+        )
+        timestamps = offset_between_datetimes(
+            start_timestamp=self.start_timestamp,
+            end_timestamp=self.end_timestamp,
+            offset_in_seconds=self.offset_in_seconds,
+            include_start_timestamp=True,
+            include_end_timestamp=True,
+        )
+        if as_type == &#39;string&#39;:
+            timestamps = list(map(to_datetime_string, timestamps))
+        buckets = [(timestamps[idx], timestamps[idx + 1]) for idx in range(len(timestamps) - 1)]
+        return buckets</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="helperpy.core.date_ops.SecondWiseBucketer.get_buckets"><code class="name flex">
+<span>def <span class="ident">get_buckets</span></span>(<span>self, as_type: Optional[str] = 'string') ‑> Union[List[Tuple[datetime.datetime, datetime.datetime]], List[Tuple[str, str]]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns list of tuples of (start_timestamp, end_timestamp) buckets. They will always be in ascending order.
+Options for <code>as_type</code> are: ['datetime', 'string']. Default: 'string'.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_buckets(self, as_type: Optional[str] = &#39;string&#39;) -&gt; Union[List[Tuple[datetime, datetime]], List[Tuple[str, str]]]:
+    &#34;&#34;&#34;
+    Returns list of tuples of (start_timestamp, end_timestamp) buckets. They will always be in ascending order.
+    Options for `as_type` are: [&#39;datetime&#39;, &#39;string&#39;]. Default: &#39;string&#39;.
+    &#34;&#34;&#34;
+    raise_exception_if_invalid_option(
+        option_name=&#39;as_type&#39;,
+        option_value=as_type,
+        valid_option_values=[&#39;datetime&#39;, &#39;string&#39;],
+    )
+    timestamps = offset_between_datetimes(
+        start_timestamp=self.start_timestamp,
+        end_timestamp=self.end_timestamp,
+        offset_in_seconds=self.offset_in_seconds,
+        include_start_timestamp=True,
+        include_end_timestamp=True,
+    )
+    if as_type == &#39;string&#39;:
+        timestamps = list(map(to_datetime_string, timestamps))
+    buckets = [(timestamps[idx], timestamps[idx + 1]) for idx in range(len(timestamps) - 1)]
+    return buckets</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter"><code class="flex name class">
+<span>class <span class="ident">TimeUnitConverter</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class for time related unit conversions</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TimeUnitConverter:
+    &#34;&#34;&#34;Class for time related unit conversions&#34;&#34;&#34;
+    SECONDS_PER_MINUTE = 60
+    SECONDS_PER_HOUR = SECONDS_PER_MINUTE * 60
+    SECONDS_PER_DAY = SECONDS_PER_HOUR * 24
+    SECONDS_PER_WEEK = SECONDS_PER_DAY * 7
+    SECONDS_PER_NON_LEAP_YEAR = SECONDS_PER_DAY * 365
+    SECONDS_PER_LEAP_YEAR = SECONDS_PER_DAY * 366
+
+    MINUTES_PER_HOUR = 60
+    MINUTES_PER_DAY = MINUTES_PER_HOUR * 24
+    MINUTES_PER_WEEK = MINUTES_PER_DAY * 7
+    MINUTES_PER_NON_LEAP_YEAR = MINUTES_PER_DAY * 365
+    MINUTES_PER_LEAP_YEAR = MINUTES_PER_DAY * 366
+
+    HOURS_PER_DAY = 24
+    HOURS_PER_WEEK = HOURS_PER_DAY * 7
+    HOURS_PER_NON_LEAP_YEAR = HOURS_PER_DAY * 365
+    HOURS_PER_LEAP_YEAR = HOURS_PER_DAY * 366</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.HOURS_PER_DAY"><code class="name">var <span class="ident">HOURS_PER_DAY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.HOURS_PER_LEAP_YEAR"><code class="name">var <span class="ident">HOURS_PER_LEAP_YEAR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.HOURS_PER_NON_LEAP_YEAR"><code class="name">var <span class="ident">HOURS_PER_NON_LEAP_YEAR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.HOURS_PER_WEEK"><code class="name">var <span class="ident">HOURS_PER_WEEK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_DAY"><code class="name">var <span class="ident">MINUTES_PER_DAY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_HOUR"><code class="name">var <span class="ident">MINUTES_PER_HOUR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_LEAP_YEAR"><code class="name">var <span class="ident">MINUTES_PER_LEAP_YEAR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_NON_LEAP_YEAR"><code class="name">var <span class="ident">MINUTES_PER_NON_LEAP_YEAR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_WEEK"><code class="name">var <span class="ident">MINUTES_PER_WEEK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_DAY"><code class="name">var <span class="ident">SECONDS_PER_DAY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_HOUR"><code class="name">var <span class="ident">SECONDS_PER_HOUR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_LEAP_YEAR"><code class="name">var <span class="ident">SECONDS_PER_LEAP_YEAR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_MINUTE"><code class="name">var <span class="ident">SECONDS_PER_MINUTE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_NON_LEAP_YEAR"><code class="name">var <span class="ident">SECONDS_PER_NON_LEAP_YEAR</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_WEEK"><code class="name">var <span class="ident">SECONDS_PER_WEEK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="helperpy.core" href="index.html">helperpy.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="helperpy.core.date_ops.convert_to_datetime" href="#helperpy.core.date_ops.convert_to_datetime">convert_to_datetime</a></code></li>
+<li><code><a title="helperpy.core.date_ops.convert_to_naive_timezone" href="#helperpy.core.date_ops.convert_to_naive_timezone">convert_to_naive_timezone</a></code></li>
+<li><code><a title="helperpy.core.date_ops.get_current_timestamp_as_integer" href="#helperpy.core.date_ops.get_current_timestamp_as_integer">get_current_timestamp_as_integer</a></code></li>
+<li><code><a title="helperpy.core.date_ops.get_dates_between" href="#helperpy.core.date_ops.get_dates_between">get_dates_between</a></code></li>
+<li><code><a title="helperpy.core.date_ops.get_day_of_week" href="#helperpy.core.date_ops.get_day_of_week">get_day_of_week</a></code></li>
+<li><code><a title="helperpy.core.date_ops.get_random_timestamp" href="#helperpy.core.date_ops.get_random_timestamp">get_random_timestamp</a></code></li>
+<li><code><a title="helperpy.core.date_ops.get_random_timestamp_as_integer" href="#helperpy.core.date_ops.get_random_timestamp_as_integer">get_random_timestamp_as_integer</a></code></li>
+<li><code><a title="helperpy.core.date_ops.ist_to_utc" href="#helperpy.core.date_ops.ist_to_utc">ist_to_utc</a></code></li>
+<li><code><a title="helperpy.core.date_ops.offset_between_dates" href="#helperpy.core.date_ops.offset_between_dates">offset_between_dates</a></code></li>
+<li><code><a title="helperpy.core.date_ops.offset_between_datetimes" href="#helperpy.core.date_ops.offset_between_datetimes">offset_between_datetimes</a></code></li>
+<li><code><a title="helperpy.core.date_ops.parse_date_string" href="#helperpy.core.date_ops.parse_date_string">parse_date_string</a></code></li>
+<li><code><a title="helperpy.core.date_ops.parse_datetime_string" href="#helperpy.core.date_ops.parse_datetime_string">parse_datetime_string</a></code></li>
+<li><code><a title="helperpy.core.date_ops.period_to_datetime" href="#helperpy.core.date_ops.period_to_datetime">period_to_datetime</a></code></li>
+<li><code><a title="helperpy.core.date_ops.to_date_string" href="#helperpy.core.date_ops.to_date_string">to_date_string</a></code></li>
+<li><code><a title="helperpy.core.date_ops.to_datetime_string" href="#helperpy.core.date_ops.to_datetime_string">to_datetime_string</a></code></li>
+<li><code><a title="helperpy.core.date_ops.utc_to_ist" href="#helperpy.core.date_ops.utc_to_ist">utc_to_ist</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="helperpy.core.date_ops.DateWiseBucketer" href="#helperpy.core.date_ops.DateWiseBucketer">DateWiseBucketer</a></code></h4>
+<ul class="">
+<li><code><a title="helperpy.core.date_ops.DateWiseBucketer.get_buckets" href="#helperpy.core.date_ops.DateWiseBucketer.get_buckets">get_buckets</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="helperpy.core.date_ops.MonthWiseBucketer" href="#helperpy.core.date_ops.MonthWiseBucketer">MonthWiseBucketer</a></code></h4>
+<ul class="">
+<li><code><a title="helperpy.core.date_ops.MonthWiseBucketer.get_buckets" href="#helperpy.core.date_ops.MonthWiseBucketer.get_buckets">get_buckets</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="helperpy.core.date_ops.SecondWiseBucketer" href="#helperpy.core.date_ops.SecondWiseBucketer">SecondWiseBucketer</a></code></h4>
+<ul class="">
+<li><code><a title="helperpy.core.date_ops.SecondWiseBucketer.get_buckets" href="#helperpy.core.date_ops.SecondWiseBucketer.get_buckets">get_buckets</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="helperpy.core.date_ops.TimeUnitConverter" href="#helperpy.core.date_ops.TimeUnitConverter">TimeUnitConverter</a></code></h4>
+<ul class="">
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.HOURS_PER_DAY" href="#helperpy.core.date_ops.TimeUnitConverter.HOURS_PER_DAY">HOURS_PER_DAY</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.HOURS_PER_LEAP_YEAR" href="#helperpy.core.date_ops.TimeUnitConverter.HOURS_PER_LEAP_YEAR">HOURS_PER_LEAP_YEAR</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.HOURS_PER_NON_LEAP_YEAR" href="#helperpy.core.date_ops.TimeUnitConverter.HOURS_PER_NON_LEAP_YEAR">HOURS_PER_NON_LEAP_YEAR</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.HOURS_PER_WEEK" href="#helperpy.core.date_ops.TimeUnitConverter.HOURS_PER_WEEK">HOURS_PER_WEEK</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_DAY" href="#helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_DAY">MINUTES_PER_DAY</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_HOUR" href="#helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_HOUR">MINUTES_PER_HOUR</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_LEAP_YEAR" href="#helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_LEAP_YEAR">MINUTES_PER_LEAP_YEAR</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_NON_LEAP_YEAR" href="#helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_NON_LEAP_YEAR">MINUTES_PER_NON_LEAP_YEAR</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_WEEK" href="#helperpy.core.date_ops.TimeUnitConverter.MINUTES_PER_WEEK">MINUTES_PER_WEEK</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_DAY" href="#helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_DAY">SECONDS_PER_DAY</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_HOUR" href="#helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_HOUR">SECONDS_PER_HOUR</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_LEAP_YEAR" href="#helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_LEAP_YEAR">SECONDS_PER_LEAP_YEAR</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_MINUTE" href="#helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_MINUTE">SECONDS_PER_MINUTE</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_NON_LEAP_YEAR" href="#helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_NON_LEAP_YEAR">SECONDS_PER_NON_LEAP_YEAR</a></code></li>
+<li><code><a title="helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_WEEK" href="#helperpy.core.date_ops.TimeUnitConverter.SECONDS_PER_WEEK">SECONDS_PER_WEEK</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

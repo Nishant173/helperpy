@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>helperpy.core.file_io API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>helperpy.core.file_io</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from typing import Any, List, Optional
+import json
+import ntpath
+import os
+import shutil
+
+import joblib
+import numpy as np
+import pandas as pd
+from tinytag import TinyTag
+from tqdm import tqdm
+
+from helperpy.core.utils import get_timetaken_fstring
+from helperpy.data_wrangler.transform import rank_and_sort
+
+
+def get_extension(filepath: str) -&gt; str:
+    return os.path.splitext(filepath)[-1][1:]
+
+
+def get_basename_from_filepath(filepath: str) -&gt; str:
+    &#34;&#34;&#34;Returns base-name of the file/folder from the given `filepath` (along with the extension, if any)&#34;&#34;&#34;
+    head, tail = ntpath.split(p=filepath)
+    return tail or ntpath.basename(head)
+
+
+def get_absolute_filepath(filepath: str) -&gt; str:
+    &#34;&#34;&#34;Returns absolute filepath of the file/folder from the given `filepath` (along with the extension, if any)&#34;&#34;&#34;
+    absolute_filepath = os.path.realpath(path=filepath)
+    return absolute_filepath
+
+
+def get_line_count(filepath: str) -&gt; int:
+    &#34;&#34;&#34;Returns count of number of lines in the given file&#34;&#34;&#34;
+    num_lines = sum(1 for _ in open(file=filepath, encoding=&#34;utf8&#34;))
+    return num_lines
+
+
+def filter_filepaths_by_extensions(
+        filepaths: List[str],
+        extensions: List[str],
+    ) -&gt; List[str]:
+    &#34;&#34;&#34;
+    Filters given filepaths by the desired extensions.
+
+    &gt;&gt;&gt; filter_filepaths_by_extensions(
+        filepaths=[&#39;one.js&#39;, &#39;two.py&#39;, &#39;three.css&#39;, &#39;four.go&#39;, &#39;five.html&#39;, &#39;six.py&#39;, &#39;seven.js&#39;],
+        extensions=[&#39;css&#39;, &#39;js&#39;],
+    )
+    &#34;&#34;&#34;
+    extensions = list(
+        map(lambda extension: extension.strip().lower(), extensions)
+    )
+    filepaths_needed = list(
+        filter(lambda filepath: get_extension(filepath=filepath).strip().lower() in extensions, filepaths)
+    )
+    return filepaths_needed
+
+
+def get_unique_extensions(filepaths: List[str]) -&gt; List[str]:
+    &#34;&#34;&#34;Returns all unique extensions available in the list of filepaths given&#34;&#34;&#34;
+    all_extensions = list(map(get_extension, filepaths))
+    unique_extensions = sorted(list(set(all_extensions)))
+    return unique_extensions
+
+
+def __get_filepaths_at_first_level(src_dir: str) -&gt; List[str]:
+    folders_and_files_in_directory = os.listdir(src_dir)
+    folders_and_files_in_directory = list(
+        map(lambda folder_or_file: os.path.join(src_dir, folder_or_file), folders_and_files_in_directory)
+    )
+    files_in_directory = list(
+        filter(lambda folder_or_file: os.path.isfile(folder_or_file), folders_and_files_in_directory)
+    )
+    return files_in_directory
+
+
+def __get_filepaths_at_all_levels(src_dir: str) -&gt; List[str]:
+    filepaths = []
+    for path, _, filenames in os.walk(src_dir):
+        for filename in filenames:
+            filepath = os.path.join(path, filename)
+            filepaths.append(filepath)
+    return filepaths
+
+
+def get_filepaths(
+        src_dir: str,
+        depth: str,
+        extensions: Optional[List[str]] = None,
+    ) -&gt; List[str]:
+    &#34;&#34;&#34;
+    Gets list of all filepaths (of files) from source directory.
+    
+    Parameters:
+        - src_dir (str): Filepath to the source directory. Can be absolute or relative.
+        - depth (str): Options: [&#39;all_levels&#39;, &#39;first_level&#39;].
+        Set to &#39;all_levels&#39; if you want to get filepaths from all sub-directories (if any) in the given source directory.
+        Set to &#39;first_level&#39; if you want to get filepaths only from the first directory given.
+        - extensions (list): List of extensions to filter the filepaths by (optional).
+    
+    &gt;&gt;&gt; get_filepaths(
+            src_dir=&#34;SOME_SOURCE_DIR&#34;,
+            depth=&#39;all_levels&#39;,
+            extensions=[&#39;csv&#39;, &#39;xlsx&#39;],
+        )
+    &#34;&#34;&#34;
+    depth_options = [&#39;all_levels&#39;, &#39;first_level&#39;]
+    if depth not in depth_options:
+        raise ValueError(f&#34;Expected `depth` to be in {depth_options}, but got &#39;{depth}&#39;&#34;)
+    
+    if depth == &#39;all_levels&#39;:
+        filepaths = __get_filepaths_at_all_levels(src_dir=src_dir)
+    elif depth == &#39;first_level&#39;:
+        filepaths = __get_filepaths_at_first_level(src_dir=src_dir)
+    if extensions is not None:
+        filepaths = filter_filepaths_by_extensions(filepaths=filepaths, extensions=extensions)
+    return filepaths
+
+
+def create_archive_file(
+        src_dir: str,
+        archive_format: str,
+    ) -&gt; None:
+    &#34;&#34;&#34;
+    Creates archive file of the given source directory.
+    Options for `archive_format` are: [&#39;zip&#39;, &#39;tar&#39;, &#39;gztar&#39;, &#39;bztar&#39;, &#39;xztar&#39;].
+    &#34;&#34;&#34;
+    absolute_path_to_src_dir = get_absolute_filepath(filepath=src_dir)
+    basename_of_src_dir = get_basename_from_filepath(filepath=src_dir)
+    shutil.make_archive(
+        base_name=basename_of_src_dir,
+        format=archive_format,
+        root_dir=absolute_path_to_src_dir,
+    )
+    return None
+
+
+def get_line_count_info(
+        filepaths: List[str],
+        rank_by_line_count: Optional[bool] = False,
+    ) -&gt; pd.DataFrame:
+    &#34;&#34;&#34;
+    Gets line-count of all filepaths given.
+    Returns DataFrame having columns: [&#39;Filepath&#39;, &#39;LineCount&#39;, &#39;Basename&#39;, &#39;Extension&#39;].
+    If `rank_by_line_count` is set to True, then there will be an additional column called: &#39;RankByLineCount&#39;.
+
+    &gt;&gt;&gt; get_line_count_info(
+            filepaths=[&#39;file1.txt&#39;, &#39;file2.txt&#39;, &#39;file3.txt&#39;],
+            rank_by_line_count=True,
+        )
+    &#34;&#34;&#34;
+    df = pd.DataFrame()
+    df[&#39;Filepath&#39;] = filepaths
+    df[&#39;LineCount&#39;] = df[&#39;Filepath&#39;].apply(get_line_count)
+    df[&#39;Basename&#39;] = df[&#39;Filepath&#39;].apply(get_basename_from_filepath)
+    df[&#39;Extension&#39;] = df[&#39;Filepath&#39;].apply(get_extension)
+    if rank_by_line_count:
+        df = rank_and_sort(
+            data=df,
+            rank_column_name=&#39;RankByLineCount&#39;,
+            rank_by=[&#39;LineCount&#39;],
+            ascending=[False],
+            how=&#39;dense_rank&#39;,
+        )
+    return df
+
+
+def get_media_metadata(filepaths: List[str]) -&gt; pd.DataFrame:
+    &#34;&#34;&#34;
+    Gets metadata of all media-file filepaths given i.e; files with extensions mp3, mp4, etc.
+    Returns DataFrame having columns: [&#39;Filepath&#39;, &#39;Basename&#39;, &#39;Extension&#39;, &#39;BitRate&#39;,
+    &#39;DurationInSeconds&#39;, &#39;Duration&#39;, &#39;SizeInMb&#39;, &#39;SampleRate&#39;].
+    
+    &gt;&gt;&gt; get_media_metadata(filepaths=[&#39;audio.mp3&#39;, &#39;audio.m4a&#39;, &#39;video.mp4&#39;])
+    &#34;&#34;&#34;
+    bytes_per_mb = 1048576
+    df = pd.DataFrame()
+    df[&#39;TinyTagObject&#39;] = [TinyTag.get(filepath) for filepath in tqdm(filepaths)]
+    df[&#39;Filepath&#39;] = filepaths
+    df[&#39;Basename&#39;] = df[&#39;Filepath&#39;].apply(get_basename_from_filepath)
+    df[&#39;Extension&#39;] = df[&#39;Filepath&#39;].apply(get_extension)
+    df[&#39;BitRate&#39;] = df[&#39;TinyTagObject&#39;].apply(lambda obj: obj.bitrate)
+    df[&#39;DurationInSeconds&#39;] = df[&#39;TinyTagObject&#39;].apply(
+        lambda obj: None if obj.duration is None else int(np.ceil(obj.duration))
+    )
+    df[&#39;Duration&#39;] = df[&#39;TinyTagObject&#39;].apply(
+        lambda obj: None if obj.duration is None else get_timetaken_fstring(
+            num_seconds=int(np.ceil(obj.duration))
+        )
+    )
+    df[&#39;SizeInMb&#39;] = df[&#39;TinyTagObject&#39;].apply(
+        lambda obj: None if obj.filesize is None else round(obj.filesize / bytes_per_mb, 2)
+    )
+    df[&#39;SampleRate&#39;] = df[&#39;TinyTagObject&#39;].apply(lambda obj: obj.samplerate)
+    df.drop(labels=[&#39;TinyTagObject&#39;], axis=1, inplace=True)
+    return df
+
+
+def pickle_load(filepath: str) -&gt; Any:
+    &#34;&#34;&#34;Loads data from pickle file, via joblib module&#34;&#34;&#34;
+    python_obj = joblib.load(filename=filepath)
+    return python_obj
+
+
+def pickle_save(data_obj: Any, filepath: str) -&gt; None:
+    &#34;&#34;&#34;Saves data as pickle file, via joblib module&#34;&#34;&#34;
+    joblib.dump(value=data_obj, filename=filepath)
+    return None
+
+
+def save_object_as_json(obj: Any, filepath: str) -&gt; None:
+    &#34;&#34;&#34;Saves Python object as JSON file&#34;&#34;&#34;
+    with open(file=filepath, mode=&#39;w&#39;) as fp:
+        json.dump(obj=obj, fp=fp, indent=4)
+    return None
+
+
+def read_to_dataframe(filepath: str) -&gt; pd.DataFrame:
+    &#34;&#34;&#34;
+    Reads DataFrame from filepaths having any of the following extensions: [&#39;csv&#39;, &#39;xlsx&#39;].
+    &gt;&gt;&gt; df = read_to_dataframe(filepath=&#34;some_data.csv&#34;)
+    &#34;&#34;&#34;
+    extension = get_extension(filepath=filepath).lower()
+    if extension == &#39;csv&#39;:
+        data = pd.read_csv(filepath)
+    elif extension == &#39;xlsx&#39;:
+        data = pd.read_excel(filepath)
+    else:
+        raise ValueError(f&#34;Expected filepath&#39;s extension to be in [&#39;csv&#39;, &#39;xlsx&#39;], but got &#39;{extension}&#39;&#34;)
+    return data
+
+
+def save_dataframe(
+        data: pd.DataFrame,
+        filepath: str,
+    ) -&gt; None:
+    &#34;&#34;&#34;
+    Saves DataFrame to one of the following file types: [&#39;csv&#39;, &#39;xlsx&#39;, &#39;json&#39;].
+    &gt;&gt;&gt; save_dataframe(
+            data=pd.DataFrame(data={&#39;Column1&#39;: [1, 2, 3, 4]}), # Some DataFrame
+            filepath=&#34;some_data.csv&#34;,
+        )
+    &#34;&#34;&#34;
+    extension = get_extension(filepath=filepath).lower()
+    if extension == &#39;csv&#39;:
+        data.to_csv(filepath, index=False)
+    elif extension == &#39;xlsx&#39;:
+        data.to_excel(filepath, index=False)
+    elif extension == &#39;json&#39;:
+        data.to_json(filepath, orient=&#39;records&#39;, indent=4)
+    else:
+        raise ValueError(f&#34;Expected filepath&#39;s extension to be in [&#39;csv&#39;, &#39;xlsx&#39;, &#39;json&#39;], but got &#39;{extension}&#39;&#34;)
+    return None</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="helperpy.core.file_io.create_archive_file"><code class="name flex">
+<span>def <span class="ident">create_archive_file</span></span>(<span>src_dir: str, archive_format: str) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates archive file of the given source directory.
+Options for <code>archive_format</code> are: ['zip', 'tar', 'gztar', 'bztar', 'xztar'].</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_archive_file(
+        src_dir: str,
+        archive_format: str,
+    ) -&gt; None:
+    &#34;&#34;&#34;
+    Creates archive file of the given source directory.
+    Options for `archive_format` are: [&#39;zip&#39;, &#39;tar&#39;, &#39;gztar&#39;, &#39;bztar&#39;, &#39;xztar&#39;].
+    &#34;&#34;&#34;
+    absolute_path_to_src_dir = get_absolute_filepath(filepath=src_dir)
+    basename_of_src_dir = get_basename_from_filepath(filepath=src_dir)
+    shutil.make_archive(
+        base_name=basename_of_src_dir,
+        format=archive_format,
+        root_dir=absolute_path_to_src_dir,
+    )
+    return None</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.filter_filepaths_by_extensions"><code class="name flex">
+<span>def <span class="ident">filter_filepaths_by_extensions</span></span>(<span>filepaths: List[str], extensions: List[str]) ‑> List[str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Filters given filepaths by the desired extensions.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; filter_filepaths_by_extensions(
+    filepaths=['one.js', 'two.py', 'three.css', 'four.go', 'five.html', 'six.py', 'seven.js'],
+    extensions=['css', 'js'],
+)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def filter_filepaths_by_extensions(
+        filepaths: List[str],
+        extensions: List[str],
+    ) -&gt; List[str]:
+    &#34;&#34;&#34;
+    Filters given filepaths by the desired extensions.
+
+    &gt;&gt;&gt; filter_filepaths_by_extensions(
+        filepaths=[&#39;one.js&#39;, &#39;two.py&#39;, &#39;three.css&#39;, &#39;four.go&#39;, &#39;five.html&#39;, &#39;six.py&#39;, &#39;seven.js&#39;],
+        extensions=[&#39;css&#39;, &#39;js&#39;],
+    )
+    &#34;&#34;&#34;
+    extensions = list(
+        map(lambda extension: extension.strip().lower(), extensions)
+    )
+    filepaths_needed = list(
+        filter(lambda filepath: get_extension(filepath=filepath).strip().lower() in extensions, filepaths)
+    )
+    return filepaths_needed</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.get_absolute_filepath"><code class="name flex">
+<span>def <span class="ident">get_absolute_filepath</span></span>(<span>filepath: str) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns absolute filepath of the file/folder from the given <code>filepath</code> (along with the extension, if any)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_absolute_filepath(filepath: str) -&gt; str:
+    &#34;&#34;&#34;Returns absolute filepath of the file/folder from the given `filepath` (along with the extension, if any)&#34;&#34;&#34;
+    absolute_filepath = os.path.realpath(path=filepath)
+    return absolute_filepath</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.get_basename_from_filepath"><code class="name flex">
+<span>def <span class="ident">get_basename_from_filepath</span></span>(<span>filepath: str) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns base-name of the file/folder from the given <code>filepath</code> (along with the extension, if any)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_basename_from_filepath(filepath: str) -&gt; str:
+    &#34;&#34;&#34;Returns base-name of the file/folder from the given `filepath` (along with the extension, if any)&#34;&#34;&#34;
+    head, tail = ntpath.split(p=filepath)
+    return tail or ntpath.basename(head)</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.get_extension"><code class="name flex">
+<span>def <span class="ident">get_extension</span></span>(<span>filepath: str) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_extension(filepath: str) -&gt; str:
+    return os.path.splitext(filepath)[-1][1:]</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.get_filepaths"><code class="name flex">
+<span>def <span class="ident">get_filepaths</span></span>(<span>src_dir: str, depth: str, extensions: Optional[List[str]] = None) ‑> List[str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets list of all filepaths (of files) from source directory.</p>
+<h2 id="parameters">Parameters</h2>
+<ul>
+<li>src_dir (str): Filepath to the source directory. Can be absolute or relative.</li>
+<li>depth (str): Options: ['all_levels', 'first_level'].
+Set to 'all_levels' if you want to get filepaths from all sub-directories (if any) in the given source directory.
+Set to 'first_level' if you want to get filepaths only from the first directory given.</li>
+<li>extensions (list): List of extensions to filter the filepaths by (optional).</li>
+</ul>
+<pre><code class="language-python-repl">&gt;&gt;&gt; get_filepaths(
+        src_dir=&quot;SOME_SOURCE_DIR&quot;,
+        depth='all_levels',
+        extensions=['csv', 'xlsx'],
+    )
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_filepaths(
+        src_dir: str,
+        depth: str,
+        extensions: Optional[List[str]] = None,
+    ) -&gt; List[str]:
+    &#34;&#34;&#34;
+    Gets list of all filepaths (of files) from source directory.
+    
+    Parameters:
+        - src_dir (str): Filepath to the source directory. Can be absolute or relative.
+        - depth (str): Options: [&#39;all_levels&#39;, &#39;first_level&#39;].
+        Set to &#39;all_levels&#39; if you want to get filepaths from all sub-directories (if any) in the given source directory.
+        Set to &#39;first_level&#39; if you want to get filepaths only from the first directory given.
+        - extensions (list): List of extensions to filter the filepaths by (optional).
+    
+    &gt;&gt;&gt; get_filepaths(
+            src_dir=&#34;SOME_SOURCE_DIR&#34;,
+            depth=&#39;all_levels&#39;,
+            extensions=[&#39;csv&#39;, &#39;xlsx&#39;],
+        )
+    &#34;&#34;&#34;
+    depth_options = [&#39;all_levels&#39;, &#39;first_level&#39;]
+    if depth not in depth_options:
+        raise ValueError(f&#34;Expected `depth` to be in {depth_options}, but got &#39;{depth}&#39;&#34;)
+    
+    if depth == &#39;all_levels&#39;:
+        filepaths = __get_filepaths_at_all_levels(src_dir=src_dir)
+    elif depth == &#39;first_level&#39;:
+        filepaths = __get_filepaths_at_first_level(src_dir=src_dir)
+    if extensions is not None:
+        filepaths = filter_filepaths_by_extensions(filepaths=filepaths, extensions=extensions)
+    return filepaths</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.get_line_count"><code class="name flex">
+<span>def <span class="ident">get_line_count</span></span>(<span>filepath: str) ‑> int</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns count of number of lines in the given file</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_line_count(filepath: str) -&gt; int:
+    &#34;&#34;&#34;Returns count of number of lines in the given file&#34;&#34;&#34;
+    num_lines = sum(1 for _ in open(file=filepath, encoding=&#34;utf8&#34;))
+    return num_lines</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.get_line_count_info"><code class="name flex">
+<span>def <span class="ident">get_line_count_info</span></span>(<span>filepaths: List[str], rank_by_line_count: Optional[bool] = False) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets line-count of all filepaths given.
+Returns DataFrame having columns: ['Filepath', 'LineCount', 'Basename', 'Extension'].
+If <code>rank_by_line_count</code> is set to True, then there will be an additional column called: 'RankByLineCount'.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; get_line_count_info(
+        filepaths=['file1.txt', 'file2.txt', 'file3.txt'],
+        rank_by_line_count=True,
+    )
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_line_count_info(
+        filepaths: List[str],
+        rank_by_line_count: Optional[bool] = False,
+    ) -&gt; pd.DataFrame:
+    &#34;&#34;&#34;
+    Gets line-count of all filepaths given.
+    Returns DataFrame having columns: [&#39;Filepath&#39;, &#39;LineCount&#39;, &#39;Basename&#39;, &#39;Extension&#39;].
+    If `rank_by_line_count` is set to True, then there will be an additional column called: &#39;RankByLineCount&#39;.
+
+    &gt;&gt;&gt; get_line_count_info(
+            filepaths=[&#39;file1.txt&#39;, &#39;file2.txt&#39;, &#39;file3.txt&#39;],
+            rank_by_line_count=True,
+        )
+    &#34;&#34;&#34;
+    df = pd.DataFrame()
+    df[&#39;Filepath&#39;] = filepaths
+    df[&#39;LineCount&#39;] = df[&#39;Filepath&#39;].apply(get_line_count)
+    df[&#39;Basename&#39;] = df[&#39;Filepath&#39;].apply(get_basename_from_filepath)
+    df[&#39;Extension&#39;] = df[&#39;Filepath&#39;].apply(get_extension)
+    if rank_by_line_count:
+        df = rank_and_sort(
+            data=df,
+            rank_column_name=&#39;RankByLineCount&#39;,
+            rank_by=[&#39;LineCount&#39;],
+            ascending=[False],
+            how=&#39;dense_rank&#39;,
+        )
+    return df</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.get_media_metadata"><code class="name flex">
+<span>def <span class="ident">get_media_metadata</span></span>(<span>filepaths: List[str]) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets metadata of all media-file filepaths given i.e; files with extensions mp3, mp4, etc.
+Returns DataFrame having columns: ['Filepath', 'Basename', 'Extension', 'BitRate',
+'DurationInSeconds', 'Duration', 'SizeInMb', 'SampleRate'].</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; get_media_metadata(filepaths=['audio.mp3', 'audio.m4a', 'video.mp4'])
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_media_metadata(filepaths: List[str]) -&gt; pd.DataFrame:
+    &#34;&#34;&#34;
+    Gets metadata of all media-file filepaths given i.e; files with extensions mp3, mp4, etc.
+    Returns DataFrame having columns: [&#39;Filepath&#39;, &#39;Basename&#39;, &#39;Extension&#39;, &#39;BitRate&#39;,
+    &#39;DurationInSeconds&#39;, &#39;Duration&#39;, &#39;SizeInMb&#39;, &#39;SampleRate&#39;].
+    
+    &gt;&gt;&gt; get_media_metadata(filepaths=[&#39;audio.mp3&#39;, &#39;audio.m4a&#39;, &#39;video.mp4&#39;])
+    &#34;&#34;&#34;
+    bytes_per_mb = 1048576
+    df = pd.DataFrame()
+    df[&#39;TinyTagObject&#39;] = [TinyTag.get(filepath) for filepath in tqdm(filepaths)]
+    df[&#39;Filepath&#39;] = filepaths
+    df[&#39;Basename&#39;] = df[&#39;Filepath&#39;].apply(get_basename_from_filepath)
+    df[&#39;Extension&#39;] = df[&#39;Filepath&#39;].apply(get_extension)
+    df[&#39;BitRate&#39;] = df[&#39;TinyTagObject&#39;].apply(lambda obj: obj.bitrate)
+    df[&#39;DurationInSeconds&#39;] = df[&#39;TinyTagObject&#39;].apply(
+        lambda obj: None if obj.duration is None else int(np.ceil(obj.duration))
+    )
+    df[&#39;Duration&#39;] = df[&#39;TinyTagObject&#39;].apply(
+        lambda obj: None if obj.duration is None else get_timetaken_fstring(
+            num_seconds=int(np.ceil(obj.duration))
+        )
+    )
+    df[&#39;SizeInMb&#39;] = df[&#39;TinyTagObject&#39;].apply(
+        lambda obj: None if obj.filesize is None else round(obj.filesize / bytes_per_mb, 2)
+    )
+    df[&#39;SampleRate&#39;] = df[&#39;TinyTagObject&#39;].apply(lambda obj: obj.samplerate)
+    df.drop(labels=[&#39;TinyTagObject&#39;], axis=1, inplace=True)
+    return df</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.get_unique_extensions"><code class="name flex">
+<span>def <span class="ident">get_unique_extensions</span></span>(<span>filepaths: List[str]) ‑> List[str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns all unique extensions available in the list of filepaths given</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_unique_extensions(filepaths: List[str]) -&gt; List[str]:
+    &#34;&#34;&#34;Returns all unique extensions available in the list of filepaths given&#34;&#34;&#34;
+    all_extensions = list(map(get_extension, filepaths))
+    unique_extensions = sorted(list(set(all_extensions)))
+    return unique_extensions</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.pickle_load"><code class="name flex">
+<span>def <span class="ident">pickle_load</span></span>(<span>filepath: str) ‑> Any</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Loads data from pickle file, via joblib module</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pickle_load(filepath: str) -&gt; Any:
+    &#34;&#34;&#34;Loads data from pickle file, via joblib module&#34;&#34;&#34;
+    python_obj = joblib.load(filename=filepath)
+    return python_obj</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.pickle_save"><code class="name flex">
+<span>def <span class="ident">pickle_save</span></span>(<span>data_obj: Any, filepath: str) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Saves data as pickle file, via joblib module</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pickle_save(data_obj: Any, filepath: str) -&gt; None:
+    &#34;&#34;&#34;Saves data as pickle file, via joblib module&#34;&#34;&#34;
+    joblib.dump(value=data_obj, filename=filepath)
+    return None</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.read_to_dataframe"><code class="name flex">
+<span>def <span class="ident">read_to_dataframe</span></span>(<span>filepath: str) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reads DataFrame from filepaths having any of the following extensions: ['csv', 'xlsx'].</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; df = read_to_dataframe(filepath=&quot;some_data.csv&quot;)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_to_dataframe(filepath: str) -&gt; pd.DataFrame:
+    &#34;&#34;&#34;
+    Reads DataFrame from filepaths having any of the following extensions: [&#39;csv&#39;, &#39;xlsx&#39;].
+    &gt;&gt;&gt; df = read_to_dataframe(filepath=&#34;some_data.csv&#34;)
+    &#34;&#34;&#34;
+    extension = get_extension(filepath=filepath).lower()
+    if extension == &#39;csv&#39;:
+        data = pd.read_csv(filepath)
+    elif extension == &#39;xlsx&#39;:
+        data = pd.read_excel(filepath)
+    else:
+        raise ValueError(f&#34;Expected filepath&#39;s extension to be in [&#39;csv&#39;, &#39;xlsx&#39;], but got &#39;{extension}&#39;&#34;)
+    return data</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.save_dataframe"><code class="name flex">
+<span>def <span class="ident">save_dataframe</span></span>(<span>data: pandas.core.frame.DataFrame, filepath: str) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Saves DataFrame to one of the following file types: ['csv', 'xlsx', 'json'].</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; save_dataframe(
+        data=pd.DataFrame(data={'Column1': [1, 2, 3, 4]}), # Some DataFrame
+        filepath=&quot;some_data.csv&quot;,
+    )
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_dataframe(
+        data: pd.DataFrame,
+        filepath: str,
+    ) -&gt; None:
+    &#34;&#34;&#34;
+    Saves DataFrame to one of the following file types: [&#39;csv&#39;, &#39;xlsx&#39;, &#39;json&#39;].
+    &gt;&gt;&gt; save_dataframe(
+            data=pd.DataFrame(data={&#39;Column1&#39;: [1, 2, 3, 4]}), # Some DataFrame
+            filepath=&#34;some_data.csv&#34;,
+        )
+    &#34;&#34;&#34;
+    extension = get_extension(filepath=filepath).lower()
+    if extension == &#39;csv&#39;:
+        data.to_csv(filepath, index=False)
+    elif extension == &#39;xlsx&#39;:
+        data.to_excel(filepath, index=False)
+    elif extension == &#39;json&#39;:
+        data.to_json(filepath, orient=&#39;records&#39;, indent=4)
+    else:
+        raise ValueError(f&#34;Expected filepath&#39;s extension to be in [&#39;csv&#39;, &#39;xlsx&#39;, &#39;json&#39;], but got &#39;{extension}&#39;&#34;)
+    return None</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.file_io.save_object_as_json"><code class="name flex">
+<span>def <span class="ident">save_object_as_json</span></span>(<span>obj: Any, filepath: str) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Saves Python object as JSON file</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_object_as_json(obj: Any, filepath: str) -&gt; None:
+    &#34;&#34;&#34;Saves Python object as JSON file&#34;&#34;&#34;
+    with open(file=filepath, mode=&#39;w&#39;) as fp:
+        json.dump(obj=obj, fp=fp, indent=4)
+    return None</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="helperpy.core" href="index.html">helperpy.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="helperpy.core.file_io.create_archive_file" href="#helperpy.core.file_io.create_archive_file">create_archive_file</a></code></li>
+<li><code><a title="helperpy.core.file_io.filter_filepaths_by_extensions" href="#helperpy.core.file_io.filter_filepaths_by_extensions">filter_filepaths_by_extensions</a></code></li>
+<li><code><a title="helperpy.core.file_io.get_absolute_filepath" href="#helperpy.core.file_io.get_absolute_filepath">get_absolute_filepath</a></code></li>
+<li><code><a title="helperpy.core.file_io.get_basename_from_filepath" href="#helperpy.core.file_io.get_basename_from_filepath">get_basename_from_filepath</a></code></li>
+<li><code><a title="helperpy.core.file_io.get_extension" href="#helperpy.core.file_io.get_extension">get_extension</a></code></li>
+<li><code><a title="helperpy.core.file_io.get_filepaths" href="#helperpy.core.file_io.get_filepaths">get_filepaths</a></code></li>
+<li><code><a title="helperpy.core.file_io.get_line_count" href="#helperpy.core.file_io.get_line_count">get_line_count</a></code></li>
+<li><code><a title="helperpy.core.file_io.get_line_count_info" href="#helperpy.core.file_io.get_line_count_info">get_line_count_info</a></code></li>
+<li><code><a title="helperpy.core.file_io.get_media_metadata" href="#helperpy.core.file_io.get_media_metadata">get_media_metadata</a></code></li>
+<li><code><a title="helperpy.core.file_io.get_unique_extensions" href="#helperpy.core.file_io.get_unique_extensions">get_unique_extensions</a></code></li>
+<li><code><a title="helperpy.core.file_io.pickle_load" href="#helperpy.core.file_io.pickle_load">pickle_load</a></code></li>
+<li><code><a title="helperpy.core.file_io.pickle_save" href="#helperpy.core.file_io.pickle_save">pickle_save</a></code></li>
+<li><code><a title="helperpy.core.file_io.read_to_dataframe" href="#helperpy.core.file_io.read_to_dataframe">read_to_dataframe</a></code></li>
+<li><code><a title="helperpy.core.file_io.save_dataframe" href="#helperpy.core.file_io.save_dataframe">save_dataframe</a></code></li>
+<li><code><a title="helperpy.core.file_io.save_object_as_json" href="#helperpy.core.file_io.save_object_as_json">save_object_as_json</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

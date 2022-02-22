@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>helperpy.core.excel_ops API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>helperpy.core.excel_ops</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from typing import (
+    Any,
+    ByteString,
+    Dict,
+    List,
+    Optional,
+    Union,
+)
+import io
+
+import openpyxl
+from openpyxl.utils import get_column_letter
+from openpyxl.worksheet.dimensions import (
+    ColumnDimension,
+    DimensionHolder,
+)
+from openpyxl.worksheet.worksheet import Worksheet
+import pandas as pd
+import win32com.client
+
+from helperpy.core.type_annotations import (
+    Number,
+    NumberOrString,
+)
+
+
+def style_dataframe_conditionally(
+        df_style_obj: Any,
+        props: List[Dict[str, Union[pd.Series, List[NumberOrString], Dict[str, str], None]]],
+    ) -&gt; Any:
+    &#34;&#34;&#34;
+    Takes in Pandas Styler object (of class `pandas.io.formats.style.Styler`), and a list of `props`.
+    Returns Pandas Styler object after applying the styles based on the given conditions (via `props`).
+    Reference: https://pandas.pydata.org/pandas-docs/stable/user_guide/style.html
+    
+    In the `props`, each prop is a dictionary having 3 keys: [&#39;row_conditions&#39;, &#39;column_subset&#39;, &#39;styling_kwargs&#39;].
+    The keys &#39;row_conditions&#39; and &#39;column_subset&#39; can have a value of None.
+    The key &#39;styling_kwargs&#39; can have a value of {}.
+    The ordering of the `props` matter i.e; if 5 props are given, the 4th prop can over-write the 3rd prop.
+
+    &gt;&gt;&gt; num_rows = 50
+    &gt;&gt;&gt; df = pd.DataFrame(data={
+        &#39;column1&#39;: [np.random.randint(-25, 25) for _ in range(num_rows)],
+        &#39;column2&#39;: [np.random.randint(0, 100) for _ in range(num_rows)],
+        &#39;column3&#39;: [np.random.randint(-40, 15) for _ in range(num_rows)],
+        &#39;column4&#39;: [np.random.randint(-5, 5) for _ in range(num_rows)],
+    })
+    &gt;&gt;&gt; props = [
+        {
+            &#39;row_conditions&#39;: (df[&#39;column1&#39;] &gt;= 10) | (df[&#39;column1&#39;] % 2 == 0),
+            &#39;column_subset&#39;: [&#39;column1&#39;, &#39;column2&#39;],
+            &#39;styling_kwargs&#39;: {
+                &#39;background-color&#39;: &#39;green&#39;,
+                &#39;color&#39;: &#39;purple&#39;,
+            },
+        },
+        {
+            &#39;row_conditions&#39;: (df[&#39;column3&#39;] &lt; 0),
+            &#39;column_subset&#39;: None,
+            &#39;styling_kwargs&#39;: {
+                &#39;background-color&#39;: &#39;blue&#39;,
+                &#39;color&#39;: &#39;orange&#39;,
+            },
+        },
+        {
+            &#39;row_conditions&#39;: None,
+            &#39;column_subset&#39;: [&#39;column4&#39;],
+            &#39;styling_kwargs&#39;: {
+                &#39;background-color&#39;: &#39;grey&#39;,
+                &#39;color&#39;: &#39;red&#39;,
+            },
+        },
+    ]
+    &gt;&gt;&gt; style_dataframe_conditionally(df_style_obj=df.style, props=props)
+    &#34;&#34;&#34;
+    df_styled = df_style_obj.__copy__()
+    idx = pd.IndexSlice
+    for prop in props:
+        row_conditions = prop[&#39;row_conditions&#39;]
+        column_subset = prop[&#39;column_subset&#39;]
+        styling_kwargs = prop[&#39;styling_kwargs&#39;]
+
+        subset = idx[idx[row_conditions], column_subset]
+        if row_conditions is None and column_subset is None:
+            subset = None
+        elif row_conditions is None and column_subset is not None:
+            subset = idx[idx[:], column_subset]
+        elif row_conditions is not None and column_subset is None:
+            subset = idx[idx[row_conditions], :]
+        df_styled = df_styled.set_properties(
+            subset=subset,
+            axis=1,
+            **styling_kwargs,
+        )
+    return df_styled
+
+
+def style_dataframe_with_background_gradient(
+        df_style_obj: Any,
+        blue_white_red: Optional[List[NumberOrString]] = None,
+        blues: Optional[List[NumberOrString]] = None,
+        greens: Optional[List[NumberOrString]] = None,
+        red_yellow_green: Optional[List[NumberOrString]] = None,
+        summer: Optional[List[NumberOrString]] = None,
+    ) -&gt; Any:
+    &#34;&#34;&#34;
+    Takes in Pandas Styler object (of class `pandas.io.formats.style.Styler`), and returns the same
+    after applying background gradient styles based on the given column subsets.
+    &#34;&#34;&#34;
+    df_styled = df_style_obj.__copy__()
+    if blue_white_red:
+        df_styled = df_styled.background_gradient(subset=blue_white_red, cmap=&#39;bwr&#39;)
+    if blues:
+        df_styled = df_styled.background_gradient(subset=blues, cmap=&#39;Blues&#39;)
+    if greens:
+        df_styled = df_styled.background_gradient(subset=greens, cmap=&#39;Greens&#39;)
+    if red_yellow_green:
+        df_styled = df_styled.background_gradient(subset=red_yellow_green, cmap=&#39;RdYlGn&#39;)
+    if summer:
+        df_styled = df_styled.background_gradient(subset=summer, cmap=&#39;summer&#39;)
+    return df_styled
+
+
+def save_styled_dataframes(
+        destination_filepath: str,
+        sheet_name_to_df_styled: Dict[str, Any],
+    ) -&gt; None:
+    &#34;&#34;&#34;
+    Saves Pandas Styler object/s to an Excel file, which could have multiple sheets (one for each Styler object).
+    &gt;&gt;&gt; save_styled_dataframes(
+        destination_filepath=&#34;resulting_file.xlsx&#34;,
+        sheet_name_to_df_styled={
+            &#34;sheet1&#34;: df_style_obj_1,
+            &#34;sheet2&#34;: df_style_obj_2,
+        },
+    )
+    &#34;&#34;&#34;
+    with pd.ExcelWriter(destination_filepath) as excel_writer:
+        for sheet_name, df_styled in sheet_name_to_df_styled.items():
+            df_styled.to_excel(
+                excel_writer=excel_writer,
+                sheet_name=sheet_name,
+                index=False,
+                engine=&#39;xlsxwriter&#39;,
+            )
+    return None
+
+
+def get_all_excel_sheet_names(filepath: str) -&gt; List[str]:
+    &#34;&#34;&#34;Returns list of all sheet names in an Excel file&#34;&#34;&#34;
+    excel_file = pd.ExcelFile(filepath, engine=&#39;openpyxl&#39;)
+    return excel_file.sheet_names
+
+
+def get_all_excel_sheets_as_dataframes(filepath: str) -&gt; Dict[str, pd.DataFrame]:
+    &#34;&#34;&#34;
+    Takes `filepath` to an Excel file. Returns dictionary having keys = sheet names, and
+    values = DataFrame corresponding to respective sheet name.
+    &#34;&#34;&#34;
+    sheet_names = get_all_excel_sheet_names(filepath=filepath)
+    dict_obj = {}
+    for sheet_name in sheet_names:
+        df_by_sheet = pd.read_excel(filepath, engine=&#39;openpyxl&#39;, sheet_name=sheet_name)
+        dict_obj[sheet_name] = df_by_sheet
+    return dict_obj
+
+
+def excel_file_to_bytes(filepath: str) -&gt; ByteString:
+    &#34;&#34;&#34;Takes `filepath` to an Excel file, and returns ByteString of the same&#34;&#34;&#34;
+    bio = io.BytesIO()
+    writer = pd.ExcelWriter(bio, engine=&#39;openpyxl&#39;)
+    dict_all_excel_sheets = get_all_excel_sheets_as_dataframes(filepath=filepath)
+    for sheet_name, df_obj in dict_all_excel_sheets.items():
+        df_obj.to_excel(writer, sheet_name=sheet_name, index=False)
+    writer.save()
+    bytes_obj = bio.getvalue()
+    return bytes_obj
+
+
+def __get_column_names_from_worksheet(worksheet: Worksheet) -&gt; List[NumberOrString]:
+    &#34;&#34;&#34;Returns list of column names (headers) from worksheet object (i.e; the values from row #1)&#34;&#34;&#34;
+    column_names = [
+        column.value for column in next(worksheet.iter_rows(min_row=1, max_row=1))
+    ]
+    return column_names
+
+
+def adjust_column_widths_of_excel_file(
+        src_filepath: str,
+        destination_filepath: str,
+        how: Optional[str] = &#39;column_header_and_values&#39;,
+        fixed_width: Optional[Number] = None,
+        sheets_subset: Optional[List[str]] = None,
+    ) -&gt; None:
+    &#34;&#34;&#34;
+    Adjusts the widths of the columns in the Excel file given.
+    Works only for non-hierarchical columns (flat columns).
+    Note: Only works for Excel files with the &#39;xlsx&#39; extension.
+
+    Parameters:
+        - src_filepath (str): Path to the source Excel file (along with the extension).
+        - destination_filepath (str): Path to the destination Excel file (along with the extension).
+        - how (str): How to assign the column widths. Options: [&#39;column_header&#39;, &#39;column_header_and_values&#39;, &#39;fixed&#39;]. Default: &#39;column_header_and_values&#39;.
+        If `how` is set to &#39;column_header&#39;, the column widths will be the size of the column header.
+        If `how` is set to &#39;column_header_and_values&#39;, the column widths will be the size of the longest of the column&#39;s header and values.
+        If `how` is set to &#39;fixed&#39;, please set the `fixed_width` parameter.
+        - fixed_width (int | float): Fixed width to use for the columns. To be set only if `how` is set to &#39;fixed&#39;. Default: None.
+        - sheets_subset (list): Subset of sheets for which the column widths need to be altered. Default: None.
+    
+    &gt;&gt;&gt; adjust_column_widths_of_excel_file(
+            src_filepath=&#34;data.xlsx&#34;,
+            destination_filepath=&#34;data_with_adjusted_columns.xlsx&#34;,
+            how=&#39;fixed&#39;,
+            fixed_width=15,
+            sheets_subset=[&#39;Sheet1&#39;, &#39;Sheet2&#39;, &#39;Sheet5&#39;],
+        )
+    &#34;&#34;&#34;
+    how_options = [&#39;column_header&#39;, &#39;column_header_and_values&#39;, &#39;fixed&#39;]
+    if how not in how_options:
+        raise ValueError(f&#34;Expected `how` to be in {how_options}, but got &#39;{how}&#39;&#34;)
+    if how == &#39;fixed&#39; and fixed_width is None:
+        raise ValueError(&#34;Since you have set how=&#39;fixed&#39;, please set the `fixed_width` parameter as well&#34;)
+    
+    workbook = openpyxl.load_workbook(filename=src_filepath)
+    sheet_names = workbook.sheetnames if sheets_subset is None else sheets_subset
+    for sheet_name in sheet_names:
+        worksheet = workbook[sheet_name]
+        column_names = __get_column_names_from_worksheet(worksheet=worksheet)
+        dimension_holder = DimensionHolder(worksheet=worksheet)
+        for column_idx, column_name in enumerate(column_names):
+            column_idx += 1 # Since 1-based indexing is used
+            column_letter = get_column_letter(idx=column_idx)
+            if how == &#39;column_header&#39;:
+                width = len(column_name) * 1.2
+            elif how == &#39;column_header_and_values&#39;:
+                cell_objs_by_column = worksheet[column_letter]
+                width = max(map(lambda cell_obj: len(str(cell_obj.value)), cell_objs_by_column)) * 1.2
+            elif how == &#39;fixed&#39;:
+                width = fixed_width
+            dimension_holder[column_letter] = ColumnDimension(
+                worksheet=worksheet,
+                min=column_idx,
+                max=column_idx,
+                width=width,
+            )
+        worksheet.column_dimensions = dimension_holder
+    workbook.save(filename=destination_filepath)
+    return None
+
+
+def excel_to_pdf(
+        src_filepath: str,
+        destination_pdf_filepath: str,
+        sheets_subset: Optional[List[str]] = None,
+    ) -&gt; None:
+    r&#34;&#34;&#34;
+    Takes `src_filepath` to an Excel file, and converts it to PDF file and saves it to `destination_pdf_filepath`.
+    Note: Requires absolute filepaths. Does not work with relative filepaths.
+    Reference: https://stackoverflow.com/questions/66421969/how-to-convert-excel-to-pdf-using-python
+
+    &gt;&gt;&gt; excel_to_pdf(
+            src_filepath=r&#34;C:\files\excel_files\some_data.xlsx&#34;,
+            destination_pdf_filepath=r&#34;C:\files\pdf_files\some_data.pdf&#34;,
+            sheets_subset=[&#39;Sheet1&#39;, &#39;Sheet2&#39;, &#39;Sheet5&#39;],
+        )
+    &#34;&#34;&#34;
+    sheet_names = get_all_excel_sheet_names(filepath=src_filepath)
+    sheet_indices = [idx+1 for idx, _ in enumerate(sheet_names)] # Set 1-based indices
+    if sheets_subset is not None:
+        sheets_that_do_not_exist = list(
+            set(sheets_subset).difference(set(sheet_names))
+        )
+        if sheets_that_do_not_exist:
+            raise ValueError(f&#34;The following sheet names do not exist: {sheets_that_do_not_exist}. Please correct the `sheets_subset` parameter&#34;)
+        for sheet_idx, sheet_name in zip(sheet_indices, sheet_names):
+            if sheet_name not in sheets_subset:
+                sheet_indices.remove(sheet_idx)
+                sheet_names.remove(sheet_name)
+    dispatch_obj = win32com.client.Dispatch(dispatch=&#34;Excel.Application&#34;)
+    dispatch_obj.Visible = False
+    wb_obj = dispatch_obj.Workbooks.Open(src_filepath)
+    wb_obj.WorkSheets(sheet_indices).Select()
+    wb_obj.ActiveSheet.ExportAsFixedFormat(0, destination_pdf_filepath)
+    wb_obj.Close()
+    dispatch_obj.Quit()
+    return None</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="helperpy.core.excel_ops.adjust_column_widths_of_excel_file"><code class="name flex">
+<span>def <span class="ident">adjust_column_widths_of_excel_file</span></span>(<span>src_filepath: str, destination_filepath: str, how: Optional[str] = 'column_header_and_values', fixed_width: Union[float, int, NoneType] = None, sheets_subset: Optional[List[str]] = None) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adjusts the widths of the columns in the Excel file given.
+Works only for non-hierarchical columns (flat columns).
+Note: Only works for Excel files with the 'xlsx' extension.</p>
+<h2 id="parameters">Parameters</h2>
+<ul>
+<li>src_filepath (str): Path to the source Excel file (along with the extension).</li>
+<li>destination_filepath (str): Path to the destination Excel file (along with the extension).</li>
+<li>how (str): How to assign the column widths. Options: ['column_header', 'column_header_and_values', 'fixed']. Default: 'column_header_and_values'.
+If <code>how</code> is set to 'column_header', the column widths will be the size of the column header.
+If <code>how</code> is set to 'column_header_and_values', the column widths will be the size of the longest of the column's header and values.
+If <code>how</code> is set to 'fixed', please set the <code>fixed_width</code> parameter.</li>
+<li>fixed_width (int | float): Fixed width to use for the columns. To be set only if <code>how</code> is set to 'fixed'. Default: None.</li>
+<li>sheets_subset (list): Subset of sheets for which the column widths need to be altered. Default: None.</li>
+</ul>
+<pre><code class="language-python-repl">&gt;&gt;&gt; adjust_column_widths_of_excel_file(
+        src_filepath=&quot;data.xlsx&quot;,
+        destination_filepath=&quot;data_with_adjusted_columns.xlsx&quot;,
+        how='fixed',
+        fixed_width=15,
+        sheets_subset=['Sheet1', 'Sheet2', 'Sheet5'],
+    )
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def adjust_column_widths_of_excel_file(
+        src_filepath: str,
+        destination_filepath: str,
+        how: Optional[str] = &#39;column_header_and_values&#39;,
+        fixed_width: Optional[Number] = None,
+        sheets_subset: Optional[List[str]] = None,
+    ) -&gt; None:
+    &#34;&#34;&#34;
+    Adjusts the widths of the columns in the Excel file given.
+    Works only for non-hierarchical columns (flat columns).
+    Note: Only works for Excel files with the &#39;xlsx&#39; extension.
+
+    Parameters:
+        - src_filepath (str): Path to the source Excel file (along with the extension).
+        - destination_filepath (str): Path to the destination Excel file (along with the extension).
+        - how (str): How to assign the column widths. Options: [&#39;column_header&#39;, &#39;column_header_and_values&#39;, &#39;fixed&#39;]. Default: &#39;column_header_and_values&#39;.
+        If `how` is set to &#39;column_header&#39;, the column widths will be the size of the column header.
+        If `how` is set to &#39;column_header_and_values&#39;, the column widths will be the size of the longest of the column&#39;s header and values.
+        If `how` is set to &#39;fixed&#39;, please set the `fixed_width` parameter.
+        - fixed_width (int | float): Fixed width to use for the columns. To be set only if `how` is set to &#39;fixed&#39;. Default: None.
+        - sheets_subset (list): Subset of sheets for which the column widths need to be altered. Default: None.
+    
+    &gt;&gt;&gt; adjust_column_widths_of_excel_file(
+            src_filepath=&#34;data.xlsx&#34;,
+            destination_filepath=&#34;data_with_adjusted_columns.xlsx&#34;,
+            how=&#39;fixed&#39;,
+            fixed_width=15,
+            sheets_subset=[&#39;Sheet1&#39;, &#39;Sheet2&#39;, &#39;Sheet5&#39;],
+        )
+    &#34;&#34;&#34;
+    how_options = [&#39;column_header&#39;, &#39;column_header_and_values&#39;, &#39;fixed&#39;]
+    if how not in how_options:
+        raise ValueError(f&#34;Expected `how` to be in {how_options}, but got &#39;{how}&#39;&#34;)
+    if how == &#39;fixed&#39; and fixed_width is None:
+        raise ValueError(&#34;Since you have set how=&#39;fixed&#39;, please set the `fixed_width` parameter as well&#34;)
+    
+    workbook = openpyxl.load_workbook(filename=src_filepath)
+    sheet_names = workbook.sheetnames if sheets_subset is None else sheets_subset
+    for sheet_name in sheet_names:
+        worksheet = workbook[sheet_name]
+        column_names = __get_column_names_from_worksheet(worksheet=worksheet)
+        dimension_holder = DimensionHolder(worksheet=worksheet)
+        for column_idx, column_name in enumerate(column_names):
+            column_idx += 1 # Since 1-based indexing is used
+            column_letter = get_column_letter(idx=column_idx)
+            if how == &#39;column_header&#39;:
+                width = len(column_name) * 1.2
+            elif how == &#39;column_header_and_values&#39;:
+                cell_objs_by_column = worksheet[column_letter]
+                width = max(map(lambda cell_obj: len(str(cell_obj.value)), cell_objs_by_column)) * 1.2
+            elif how == &#39;fixed&#39;:
+                width = fixed_width
+            dimension_holder[column_letter] = ColumnDimension(
+                worksheet=worksheet,
+                min=column_idx,
+                max=column_idx,
+                width=width,
+            )
+        worksheet.column_dimensions = dimension_holder
+    workbook.save(filename=destination_filepath)
+    return None</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.excel_ops.excel_file_to_bytes"><code class="name flex">
+<span>def <span class="ident">excel_file_to_bytes</span></span>(<span>filepath: str) ‑> ByteString</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Takes <code>filepath</code> to an Excel file, and returns ByteString of the same</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def excel_file_to_bytes(filepath: str) -&gt; ByteString:
+    &#34;&#34;&#34;Takes `filepath` to an Excel file, and returns ByteString of the same&#34;&#34;&#34;
+    bio = io.BytesIO()
+    writer = pd.ExcelWriter(bio, engine=&#39;openpyxl&#39;)
+    dict_all_excel_sheets = get_all_excel_sheets_as_dataframes(filepath=filepath)
+    for sheet_name, df_obj in dict_all_excel_sheets.items():
+        df_obj.to_excel(writer, sheet_name=sheet_name, index=False)
+    writer.save()
+    bytes_obj = bio.getvalue()
+    return bytes_obj</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.excel_ops.excel_to_pdf"><code class="name flex">
+<span>def <span class="ident">excel_to_pdf</span></span>(<span>src_filepath: str, destination_pdf_filepath: str, sheets_subset: Optional[List[str]] = None) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Takes <code>src_filepath</code> to an Excel file, and converts it to PDF file and saves it to <code>destination_pdf_filepath</code>.
+Note: Requires absolute filepaths. Does not work with relative filepaths.
+Reference: <a href="https://stackoverflow.com/questions/66421969/how-to-convert-excel-to-pdf-using-python">https://stackoverflow.com/questions/66421969/how-to-convert-excel-to-pdf-using-python</a></p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; excel_to_pdf(
+        src_filepath=r&quot;C:\files\excel_files\some_data.xlsx&quot;,
+        destination_pdf_filepath=r&quot;C:\files\pdf_files\some_data.pdf&quot;,
+        sheets_subset=['Sheet1', 'Sheet2', 'Sheet5'],
+    )
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def excel_to_pdf(
+        src_filepath: str,
+        destination_pdf_filepath: str,
+        sheets_subset: Optional[List[str]] = None,
+    ) -&gt; None:
+    r&#34;&#34;&#34;
+    Takes `src_filepath` to an Excel file, and converts it to PDF file and saves it to `destination_pdf_filepath`.
+    Note: Requires absolute filepaths. Does not work with relative filepaths.
+    Reference: https://stackoverflow.com/questions/66421969/how-to-convert-excel-to-pdf-using-python
+
+    &gt;&gt;&gt; excel_to_pdf(
+            src_filepath=r&#34;C:\files\excel_files\some_data.xlsx&#34;,
+            destination_pdf_filepath=r&#34;C:\files\pdf_files\some_data.pdf&#34;,
+            sheets_subset=[&#39;Sheet1&#39;, &#39;Sheet2&#39;, &#39;Sheet5&#39;],
+        )
+    &#34;&#34;&#34;
+    sheet_names = get_all_excel_sheet_names(filepath=src_filepath)
+    sheet_indices = [idx+1 for idx, _ in enumerate(sheet_names)] # Set 1-based indices
+    if sheets_subset is not None:
+        sheets_that_do_not_exist = list(
+            set(sheets_subset).difference(set(sheet_names))
+        )
+        if sheets_that_do_not_exist:
+            raise ValueError(f&#34;The following sheet names do not exist: {sheets_that_do_not_exist}. Please correct the `sheets_subset` parameter&#34;)
+        for sheet_idx, sheet_name in zip(sheet_indices, sheet_names):
+            if sheet_name not in sheets_subset:
+                sheet_indices.remove(sheet_idx)
+                sheet_names.remove(sheet_name)
+    dispatch_obj = win32com.client.Dispatch(dispatch=&#34;Excel.Application&#34;)
+    dispatch_obj.Visible = False
+    wb_obj = dispatch_obj.Workbooks.Open(src_filepath)
+    wb_obj.WorkSheets(sheet_indices).Select()
+    wb_obj.ActiveSheet.ExportAsFixedFormat(0, destination_pdf_filepath)
+    wb_obj.Close()
+    dispatch_obj.Quit()
+    return None</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.excel_ops.get_all_excel_sheet_names"><code class="name flex">
+<span>def <span class="ident">get_all_excel_sheet_names</span></span>(<span>filepath: str) ‑> List[str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns list of all sheet names in an Excel file</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_all_excel_sheet_names(filepath: str) -&gt; List[str]:
+    &#34;&#34;&#34;Returns list of all sheet names in an Excel file&#34;&#34;&#34;
+    excel_file = pd.ExcelFile(filepath, engine=&#39;openpyxl&#39;)
+    return excel_file.sheet_names</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.excel_ops.get_all_excel_sheets_as_dataframes"><code class="name flex">
+<span>def <span class="ident">get_all_excel_sheets_as_dataframes</span></span>(<span>filepath: str) ‑> Dict[str, pandas.core.frame.DataFrame]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Takes <code>filepath</code> to an Excel file. Returns dictionary having keys = sheet names, and
+values = DataFrame corresponding to respective sheet name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_all_excel_sheets_as_dataframes(filepath: str) -&gt; Dict[str, pd.DataFrame]:
+    &#34;&#34;&#34;
+    Takes `filepath` to an Excel file. Returns dictionary having keys = sheet names, and
+    values = DataFrame corresponding to respective sheet name.
+    &#34;&#34;&#34;
+    sheet_names = get_all_excel_sheet_names(filepath=filepath)
+    dict_obj = {}
+    for sheet_name in sheet_names:
+        df_by_sheet = pd.read_excel(filepath, engine=&#39;openpyxl&#39;, sheet_name=sheet_name)
+        dict_obj[sheet_name] = df_by_sheet
+    return dict_obj</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.excel_ops.save_styled_dataframes"><code class="name flex">
+<span>def <span class="ident">save_styled_dataframes</span></span>(<span>destination_filepath: str, sheet_name_to_df_styled: Dict[str, Any]) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Saves Pandas Styler object/s to an Excel file, which could have multiple sheets (one for each Styler object).</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; save_styled_dataframes(
+    destination_filepath=&quot;resulting_file.xlsx&quot;,
+    sheet_name_to_df_styled={
+        &quot;sheet1&quot;: df_style_obj_1,
+        &quot;sheet2&quot;: df_style_obj_2,
+    },
+)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_styled_dataframes(
+        destination_filepath: str,
+        sheet_name_to_df_styled: Dict[str, Any],
+    ) -&gt; None:
+    &#34;&#34;&#34;
+    Saves Pandas Styler object/s to an Excel file, which could have multiple sheets (one for each Styler object).
+    &gt;&gt;&gt; save_styled_dataframes(
+        destination_filepath=&#34;resulting_file.xlsx&#34;,
+        sheet_name_to_df_styled={
+            &#34;sheet1&#34;: df_style_obj_1,
+            &#34;sheet2&#34;: df_style_obj_2,
+        },
+    )
+    &#34;&#34;&#34;
+    with pd.ExcelWriter(destination_filepath) as excel_writer:
+        for sheet_name, df_styled in sheet_name_to_df_styled.items():
+            df_styled.to_excel(
+                excel_writer=excel_writer,
+                sheet_name=sheet_name,
+                index=False,
+                engine=&#39;xlsxwriter&#39;,
+            )
+    return None</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.excel_ops.style_dataframe_conditionally"><code class="name flex">
+<span>def <span class="ident">style_dataframe_conditionally</span></span>(<span>df_style_obj: Any, props: List[Dict[str, Union[pandas.core.series.Series, List[Union[int, float, str]], Dict[str, str], NoneType]]]) ‑> Any</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Takes in Pandas Styler object (of class <code>pandas.io.formats.style.Styler</code>), and a list of <code>props</code>.
+Returns Pandas Styler object after applying the styles based on the given conditions (via <code>props</code>).
+Reference: <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/style.html">https://pandas.pydata.org/pandas-docs/stable/user_guide/style.html</a></p>
+<p>In the <code>props</code>, each prop is a dictionary having 3 keys: ['row_conditions', 'column_subset', 'styling_kwargs'].
+The keys 'row_conditions' and 'column_subset' can have a value of None.
+The key 'styling_kwargs' can have a value of {}.
+The ordering of the <code>props</code> matter i.e; if 5 props are given, the 4th prop can over-write the 3rd prop.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; num_rows = 50
+&gt;&gt;&gt; df = pd.DataFrame(data={
+    'column1': [np.random.randint(-25, 25) for _ in range(num_rows)],
+    'column2': [np.random.randint(0, 100) for _ in range(num_rows)],
+    'column3': [np.random.randint(-40, 15) for _ in range(num_rows)],
+    'column4': [np.random.randint(-5, 5) for _ in range(num_rows)],
+})
+&gt;&gt;&gt; props = [
+    {
+        'row_conditions': (df['column1'] &gt;= 10) | (df['column1'] % 2 == 0),
+        'column_subset': ['column1', 'column2'],
+        'styling_kwargs': {
+            'background-color': 'green',
+            'color': 'purple',
+        },
+    },
+    {
+        'row_conditions': (df['column3'] &lt; 0),
+        'column_subset': None,
+        'styling_kwargs': {
+            'background-color': 'blue',
+            'color': 'orange',
+        },
+    },
+    {
+        'row_conditions': None,
+        'column_subset': ['column4'],
+        'styling_kwargs': {
+            'background-color': 'grey',
+            'color': 'red',
+        },
+    },
+]
+&gt;&gt;&gt; style_dataframe_conditionally(df_style_obj=df.style, props=props)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def style_dataframe_conditionally(
+        df_style_obj: Any,
+        props: List[Dict[str, Union[pd.Series, List[NumberOrString], Dict[str, str], None]]],
+    ) -&gt; Any:
+    &#34;&#34;&#34;
+    Takes in Pandas Styler object (of class `pandas.io.formats.style.Styler`), and a list of `props`.
+    Returns Pandas Styler object after applying the styles based on the given conditions (via `props`).
+    Reference: https://pandas.pydata.org/pandas-docs/stable/user_guide/style.html
+    
+    In the `props`, each prop is a dictionary having 3 keys: [&#39;row_conditions&#39;, &#39;column_subset&#39;, &#39;styling_kwargs&#39;].
+    The keys &#39;row_conditions&#39; and &#39;column_subset&#39; can have a value of None.
+    The key &#39;styling_kwargs&#39; can have a value of {}.
+    The ordering of the `props` matter i.e; if 5 props are given, the 4th prop can over-write the 3rd prop.
+
+    &gt;&gt;&gt; num_rows = 50
+    &gt;&gt;&gt; df = pd.DataFrame(data={
+        &#39;column1&#39;: [np.random.randint(-25, 25) for _ in range(num_rows)],
+        &#39;column2&#39;: [np.random.randint(0, 100) for _ in range(num_rows)],
+        &#39;column3&#39;: [np.random.randint(-40, 15) for _ in range(num_rows)],
+        &#39;column4&#39;: [np.random.randint(-5, 5) for _ in range(num_rows)],
+    })
+    &gt;&gt;&gt; props = [
+        {
+            &#39;row_conditions&#39;: (df[&#39;column1&#39;] &gt;= 10) | (df[&#39;column1&#39;] % 2 == 0),
+            &#39;column_subset&#39;: [&#39;column1&#39;, &#39;column2&#39;],
+            &#39;styling_kwargs&#39;: {
+                &#39;background-color&#39;: &#39;green&#39;,
+                &#39;color&#39;: &#39;purple&#39;,
+            },
+        },
+        {
+            &#39;row_conditions&#39;: (df[&#39;column3&#39;] &lt; 0),
+            &#39;column_subset&#39;: None,
+            &#39;styling_kwargs&#39;: {
+                &#39;background-color&#39;: &#39;blue&#39;,
+                &#39;color&#39;: &#39;orange&#39;,
+            },
+        },
+        {
+            &#39;row_conditions&#39;: None,
+            &#39;column_subset&#39;: [&#39;column4&#39;],
+            &#39;styling_kwargs&#39;: {
+                &#39;background-color&#39;: &#39;grey&#39;,
+                &#39;color&#39;: &#39;red&#39;,
+            },
+        },
+    ]
+    &gt;&gt;&gt; style_dataframe_conditionally(df_style_obj=df.style, props=props)
+    &#34;&#34;&#34;
+    df_styled = df_style_obj.__copy__()
+    idx = pd.IndexSlice
+    for prop in props:
+        row_conditions = prop[&#39;row_conditions&#39;]
+        column_subset = prop[&#39;column_subset&#39;]
+        styling_kwargs = prop[&#39;styling_kwargs&#39;]
+
+        subset = idx[idx[row_conditions], column_subset]
+        if row_conditions is None and column_subset is None:
+            subset = None
+        elif row_conditions is None and column_subset is not None:
+            subset = idx[idx[:], column_subset]
+        elif row_conditions is not None and column_subset is None:
+            subset = idx[idx[row_conditions], :]
+        df_styled = df_styled.set_properties(
+            subset=subset,
+            axis=1,
+            **styling_kwargs,
+        )
+    return df_styled</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.excel_ops.style_dataframe_with_background_gradient"><code class="name flex">
+<span>def <span class="ident">style_dataframe_with_background_gradient</span></span>(<span>df_style_obj: Any, blue_white_red: Optional[List[Union[int, float, str]]] = None, blues: Optional[List[Union[int, float, str]]] = None, greens: Optional[List[Union[int, float, str]]] = None, red_yellow_green: Optional[List[Union[int, float, str]]] = None, summer: Optional[List[Union[int, float, str]]] = None) ‑> Any</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Takes in Pandas Styler object (of class <code>pandas.io.formats.style.Styler</code>), and returns the same
+after applying background gradient styles based on the given column subsets.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def style_dataframe_with_background_gradient(
+        df_style_obj: Any,
+        blue_white_red: Optional[List[NumberOrString]] = None,
+        blues: Optional[List[NumberOrString]] = None,
+        greens: Optional[List[NumberOrString]] = None,
+        red_yellow_green: Optional[List[NumberOrString]] = None,
+        summer: Optional[List[NumberOrString]] = None,
+    ) -&gt; Any:
+    &#34;&#34;&#34;
+    Takes in Pandas Styler object (of class `pandas.io.formats.style.Styler`), and returns the same
+    after applying background gradient styles based on the given column subsets.
+    &#34;&#34;&#34;
+    df_styled = df_style_obj.__copy__()
+    if blue_white_red:
+        df_styled = df_styled.background_gradient(subset=blue_white_red, cmap=&#39;bwr&#39;)
+    if blues:
+        df_styled = df_styled.background_gradient(subset=blues, cmap=&#39;Blues&#39;)
+    if greens:
+        df_styled = df_styled.background_gradient(subset=greens, cmap=&#39;Greens&#39;)
+    if red_yellow_green:
+        df_styled = df_styled.background_gradient(subset=red_yellow_green, cmap=&#39;RdYlGn&#39;)
+    if summer:
+        df_styled = df_styled.background_gradient(subset=summer, cmap=&#39;summer&#39;)
+    return df_styled</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="helperpy.core" href="index.html">helperpy.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="helperpy.core.excel_ops.adjust_column_widths_of_excel_file" href="#helperpy.core.excel_ops.adjust_column_widths_of_excel_file">adjust_column_widths_of_excel_file</a></code></li>
+<li><code><a title="helperpy.core.excel_ops.excel_file_to_bytes" href="#helperpy.core.excel_ops.excel_file_to_bytes">excel_file_to_bytes</a></code></li>
+<li><code><a title="helperpy.core.excel_ops.excel_to_pdf" href="#helperpy.core.excel_ops.excel_to_pdf">excel_to_pdf</a></code></li>
+<li><code><a title="helperpy.core.excel_ops.get_all_excel_sheet_names" href="#helperpy.core.excel_ops.get_all_excel_sheet_names">get_all_excel_sheet_names</a></code></li>
+<li><code><a title="helperpy.core.excel_ops.get_all_excel_sheets_as_dataframes" href="#helperpy.core.excel_ops.get_all_excel_sheets_as_dataframes">get_all_excel_sheets_as_dataframes</a></code></li>
+<li><code><a title="helperpy.core.excel_ops.save_styled_dataframes" href="#helperpy.core.excel_ops.save_styled_dataframes">save_styled_dataframes</a></code></li>
+<li><code><a title="helperpy.core.excel_ops.style_dataframe_conditionally" href="#helperpy.core.excel_ops.style_dataframe_conditionally">style_dataframe_conditionally</a></code></li>
+<li><code><a title="helperpy.core.excel_ops.style_dataframe_with_background_gradient" href="#helperpy.core.excel_ops.style_dataframe_with_background_gradient">style_dataframe_with_background_gradient</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
