@@ -20,6 +20,30 @@ def print_docstring(obj: Any) -> None:
     return None
 
 
+def class_object_to_string_repr(
+        class_name: str,
+        details: Dict[str, Any],
+    ) -> str:
+    """
+    Writes __str__ representation of a class' instance.
+
+    >>> to_string_representation(
+            class_name="Person",
+            details={
+                "first_name": "James",
+                "last_name": "Murphy",
+                "age": 35,
+                "is_developer": True,
+            },
+        ) # Returns the string: "Person(first_name='James', last_name='Murphy', age=35, is_developer=True)"
+    """
+    kwargs_as_strings = []
+    for key, value in details.items():
+        value_as_string = f"'{value}'" if isinstance(value, str) else str(value)
+        kwargs_as_strings.append(f"{key}={value_as_string}")
+    return f"{class_name}({', '.join(kwargs_as_strings)})"
+
+
 def is_none(value: Any) -> bool:
     return value is None
 
