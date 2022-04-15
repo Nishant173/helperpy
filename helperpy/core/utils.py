@@ -27,7 +27,7 @@ def class_object_to_string_repr(
     """
     Writes __str__ representation of a class' instance.
 
-    >>> to_string_representation(
+    >>> class_object_to_string_repr(
             class_name="Person",
             details={
                 "first_name": "James",
