@@ -39,7 +39,7 @@ def is_none_or_nan(value: Any) -> bool:
 
 def get_timetaken_dictionary(num_seconds: Number) -> Dict[str, Number]:
     """
-    Returns dictionary having the keys: ['weeks', 'days', 'hours', 'minutes', 'seconds'] containing the time elapsed.
+    Returns dictionary having the keys: ['weeks', 'days', 'hours', 'minutes', 'seconds', 'milliseconds'] containing the time elapsed.
     
     >>> get_timetaken_dictionary(num_seconds=3725.4292)
     >>> get_timetaken_dictionary(num_seconds=885354.128129)
@@ -47,8 +47,9 @@ def get_timetaken_dictionary(num_seconds: Number) -> Dict[str, Number]:
     weeks, remainder = divmod(num_seconds, 60*60*24*7)
     days, remainder = divmod(remainder, 60*60*24)
     hours, remainder = divmod(remainder, 60*60)
-    minutes, seconds = divmod(remainder, 60)
-    seconds = round(seconds, 2)
+    minutes, remainder = divmod(remainder, 60)
+    seconds = np.floor(remainder)
+    milliseconds = round((remainder - seconds) * 1000, 5)
     
     dictionary_time_taken = {
         'weeks': integerify_if_possible(weeks),
@@ -56,6 +57,7 @@ def get_timetaken_dictionary(num_seconds: Number) -> Dict[str, Number]:
         'hours': integerify_if_possible(hours),
         'minutes': integerify_if_possible(minutes),
         'seconds': integerify_if_possible(seconds),
+        'milliseconds': integerify_if_possible(milliseconds),
     }
     return dictionary_time_taken
 
@@ -69,6 +71,7 @@ def get_timetaken_fstring(num_seconds: Number) -> str:
         'hours': 'h',
         'minutes': 'm',
         'seconds': 's',
+        'milliseconds': 'ms',
     }
     time_taken_fstring = " ".join([f"{value}{dict_unit_shortener.get(unit, unit)}" for unit, value in dict_time_taken.items() if value != 0]).strip()
     time_taken_fstring = '0s' if time_taken_fstring == "" else time_taken_fstring
@@ -116,11 +119,13 @@ def commafy_number(number: Number) -> str:
     return format(number, ",f")
 
 
+def is_whole_number(number: Number) -> bool:
+    return int(number) == number
+
+
 def integerify_if_possible(number: Number) -> Number:
     """Converts whole numbers represented as floats to integers"""
-    if int(number) == number:
-        return int(number)
-    return number
+    return int(number) if is_whole_number(number=number) else number
 
 
 def string_to_int_or_float(value: str) -> Number:
