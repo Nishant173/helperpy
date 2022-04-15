@@ -2,6 +2,7 @@ import asyncio
 from typing import Any, Dict, List, Optional
 
 import aiohttp
+from aiohttp.client_reqrep import ClientResponse
 
 
 class AsyncApiCaller:
@@ -14,9 +15,10 @@ class AsyncApiCaller:
     Usage:
     >>> aac = AsyncApiCaller(headers={}, successful_status_codes=[200])
     >>> data = aac.get_data(
-            urls=[f"https://pokeapi.co/api/v2/pokemon/{number}" for number in range(1, 500+1)],
+            urls=[f"https://pokeapi.co/api/v2/pokemon/{number}" for number in range(1, 1000+1)],
         )
-    >>> aac.get_errors() # Returns list of errors (if any)
+    >>> errors = aac.get_errors() # Returns list of errors (if any)
+    >>> aac.clear_errors() # Clears list of errors stored in the object (if any)
     """
 
     def __init__(
@@ -36,8 +38,22 @@ class AsyncApiCaller:
     def __str__(self) -> str:
         return f"{self.__class__.__name__}(headers={self.headers}, successful_status_codes={self.successful_status_codes})"
 
-    def get_errors(self):
+    def clear_errors(self) -> None:
+        self.__errors = []
+
+    def get_errors(self) -> List[Dict[str, Any]]:
         return self.__errors
+
+    async def __register_error(
+            self,
+            url: str,
+            response: ClientResponse,
+        ) -> None:
+        self.__errors.append({
+            "url": url,
+            "status_code": response.status,
+            "text": await response.text(),
+        })
 
     async def __make_api_call(
             self,
@@ -45,14 +61,11 @@ class AsyncApiCaller:
             url: str,
         ) -> Any:
         async with session.get(url, headers=self.headers) as response:
-            data = await response.json()
-            if response.status not in self.successful_status_codes:
+            if response.status in self.successful_status_codes:
+                data = await response.json()
+            else:
                 data = None
-                self.__errors.append({
-                    "url": url,
-                    "status_code": response.status,
-                    "text": await response.text(),
-                })
+                await self.__register_error(url=url, response=response)
         return data
 
     async def __make_api_calls(
@@ -72,6 +85,7 @@ class AsyncApiCaller:
                     )
                 )
             results = await asyncio.gather(*actions)
+        results = list(filter(None, results))
         return results
 
     def get_data(
