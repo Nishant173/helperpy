@@ -67,7 +67,7 @@ def is_none_or_nan(value: Any) -&gt; bool:
 
 def get_timetaken_dictionary(num_seconds: Number) -&gt; Dict[str, Number]:
     &#34;&#34;&#34;
-    Returns dictionary having the keys: [&#39;weeks&#39;, &#39;days&#39;, &#39;hours&#39;, &#39;minutes&#39;, &#39;seconds&#39;] containing the time elapsed.
+    Returns dictionary having the keys: [&#39;weeks&#39;, &#39;days&#39;, &#39;hours&#39;, &#39;minutes&#39;, &#39;seconds&#39;, &#39;milliseconds&#39;] containing the time elapsed.
     
     &gt;&gt;&gt; get_timetaken_dictionary(num_seconds=3725.4292)
     &gt;&gt;&gt; get_timetaken_dictionary(num_seconds=885354.128129)
@@ -75,8 +75,9 @@ def get_timetaken_dictionary(num_seconds: Number) -&gt; Dict[str, Number]:
     weeks, remainder = divmod(num_seconds, 60*60*24*7)
     days, remainder = divmod(remainder, 60*60*24)
     hours, remainder = divmod(remainder, 60*60)
-    minutes, seconds = divmod(remainder, 60)
-    seconds = round(seconds, 2)
+    minutes, remainder = divmod(remainder, 60)
+    seconds = np.floor(remainder)
+    milliseconds = round((remainder - seconds) * 1000, 5)
     
     dictionary_time_taken = {
         &#39;weeks&#39;: integerify_if_possible(weeks),
@@ -84,6 +85,7 @@ def get_timetaken_dictionary(num_seconds: Number) -&gt; Dict[str, Number]:
         &#39;hours&#39;: integerify_if_possible(hours),
         &#39;minutes&#39;: integerify_if_possible(minutes),
         &#39;seconds&#39;: integerify_if_possible(seconds),
+        &#39;milliseconds&#39;: integerify_if_possible(milliseconds),
     }
     return dictionary_time_taken
 
@@ -97,6 +99,7 @@ def get_timetaken_fstring(num_seconds: Number) -&gt; str:
         &#39;hours&#39;: &#39;h&#39;,
         &#39;minutes&#39;: &#39;m&#39;,
         &#39;seconds&#39;: &#39;s&#39;,
+        &#39;milliseconds&#39;: &#39;ms&#39;,
     }
     time_taken_fstring = &#34; &#34;.join([f&#34;{value}{dict_unit_shortener.get(unit, unit)}&#34; for unit, value in dict_time_taken.items() if value != 0]).strip()
     time_taken_fstring = &#39;0s&#39; if time_taken_fstring == &#34;&#34; else time_taken_fstring
@@ -144,11 +147,13 @@ def commafy_number(number: Number) -&gt; str:
     return format(number, &#34;,f&#34;)
 
 
+def is_whole_number(number: Number) -&gt; bool:
+    return int(number) == number
+
+
 def integerify_if_possible(number: Number) -&gt; Number:
     &#34;&#34;&#34;Converts whole numbers represented as floats to integers&#34;&#34;&#34;
-    if int(number) == number:
-        return int(number)
-    return number
+    return int(number) if is_whole_number(number=number) else number
 
 
 def string_to_int_or_float(value: str) -&gt; Number:
@@ -475,7 +480,7 @@ Options for <code>method</code> are: ['sum', 'difference', 'product', 'division'
 <span>def <span class="ident">get_timetaken_dictionary</span></span>(<span>num_seconds: Union[int, float]) ‑> Dict[str, Union[int, float]]</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns dictionary having the keys: ['weeks', 'days', 'hours', 'minutes', 'seconds'] containing the time elapsed.</p>
+<div class="desc"><p>Returns dictionary having the keys: ['weeks', 'days', 'hours', 'minutes', 'seconds', 'milliseconds'] containing the time elapsed.</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; get_timetaken_dictionary(num_seconds=3725.4292)
 &gt;&gt;&gt; get_timetaken_dictionary(num_seconds=885354.128129)
 </code></pre></div>
@@ -485,7 +490,7 @@ Options for <code>method</code> are: ['sum', 'difference', 'product', 'division'
 </summary>
 <pre><code class="python">def get_timetaken_dictionary(num_seconds: Number) -&gt; Dict[str, Number]:
     &#34;&#34;&#34;
-    Returns dictionary having the keys: [&#39;weeks&#39;, &#39;days&#39;, &#39;hours&#39;, &#39;minutes&#39;, &#39;seconds&#39;] containing the time elapsed.
+    Returns dictionary having the keys: [&#39;weeks&#39;, &#39;days&#39;, &#39;hours&#39;, &#39;minutes&#39;, &#39;seconds&#39;, &#39;milliseconds&#39;] containing the time elapsed.
     
     &gt;&gt;&gt; get_timetaken_dictionary(num_seconds=3725.4292)
     &gt;&gt;&gt; get_timetaken_dictionary(num_seconds=885354.128129)
@@ -493,8 +498,9 @@ Options for <code>method</code> are: ['sum', 'difference', 'product', 'division'
     weeks, remainder = divmod(num_seconds, 60*60*24*7)
     days, remainder = divmod(remainder, 60*60*24)
     hours, remainder = divmod(remainder, 60*60)
-    minutes, seconds = divmod(remainder, 60)
-    seconds = round(seconds, 2)
+    minutes, remainder = divmod(remainder, 60)
+    seconds = np.floor(remainder)
+    milliseconds = round((remainder - seconds) * 1000, 5)
     
     dictionary_time_taken = {
         &#39;weeks&#39;: integerify_if_possible(weeks),
@@ -502,6 +508,7 @@ Options for <code>method</code> are: ['sum', 'difference', 'product', 'division'
         &#39;hours&#39;: integerify_if_possible(hours),
         &#39;minutes&#39;: integerify_if_possible(minutes),
         &#39;seconds&#39;: integerify_if_possible(seconds),
+        &#39;milliseconds&#39;: integerify_if_possible(milliseconds),
     }
     return dictionary_time_taken</code></pre>
 </details>
@@ -524,6 +531,7 @@ Options for <code>method</code> are: ['sum', 'difference', 'product', 'division'
         &#39;hours&#39;: &#39;h&#39;,
         &#39;minutes&#39;: &#39;m&#39;,
         &#39;seconds&#39;: &#39;s&#39;,
+        &#39;milliseconds&#39;: &#39;ms&#39;,
     }
     time_taken_fstring = &#34; &#34;.join([f&#34;{value}{dict_unit_shortener.get(unit, unit)}&#34; for unit, value in dict_time_taken.items() if value != 0]).strip()
     time_taken_fstring = &#39;0s&#39; if time_taken_fstring == &#34;&#34; else time_taken_fstring
@@ -573,9 +581,7 @@ Options for <code>method</code> are: ['sum', 'difference', 'product', 'division'
 </summary>
 <pre><code class="python">def integerify_if_possible(number: Number) -&gt; Number:
     &#34;&#34;&#34;Converts whole numbers represented as floats to integers&#34;&#34;&#34;
-    if int(number) == number:
-        return int(number)
-    return number</code></pre>
+    return int(number) if is_whole_number(number=number) else number</code></pre>
 </details>
 </dd>
 <dt id="helperpy.core.utils.is_nan"><code class="name flex">
@@ -620,6 +626,19 @@ Options for <code>method</code> are: ['sum', 'difference', 'product', 'division'
 <pre><code class="python">def is_none_or_nan(value: Any) -&gt; bool:
     &#34;&#34;&#34;Returns True if value given is Python&#39;s native None or Numpy&#39;s NaN. Otherwise returns False&#34;&#34;&#34;
     return is_none(value=value) or is_nan(value=value)</code></pre>
+</details>
+</dd>
+<dt id="helperpy.core.utils.is_whole_number"><code class="name flex">
+<span>def <span class="ident">is_whole_number</span></span>(<span>number: Union[int, float]) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_whole_number(number: Number) -&gt; bool:
+    return int(number) == number</code></pre>
 </details>
 </dd>
 <dt id="helperpy.core.utils.listify_string_of_nums"><code class="name flex">
@@ -987,6 +1006,7 @@ Options for <code>distribution_method</code> are: ['fill', 'uniform']. Default: 
 <li><code><a title="helperpy.core.utils.is_nan" href="#helperpy.core.utils.is_nan">is_nan</a></code></li>
 <li><code><a title="helperpy.core.utils.is_none" href="#helperpy.core.utils.is_none">is_none</a></code></li>
 <li><code><a title="helperpy.core.utils.is_none_or_nan" href="#helperpy.core.utils.is_none_or_nan">is_none_or_nan</a></code></li>
+<li><code><a title="helperpy.core.utils.is_whole_number" href="#helperpy.core.utils.is_whole_number">is_whole_number</a></code></li>
 <li><code><a title="helperpy.core.utils.listify_string_of_nums" href="#helperpy.core.utils.listify_string_of_nums">listify_string_of_nums</a></code></li>
 <li><code><a title="helperpy.core.utils.print_docstring" href="#helperpy.core.utils.print_docstring">print_docstring</a></code></li>
 <li><code><a title="helperpy.core.utils.round_off_as_string" href="#helperpy.core.utils.round_off_as_string">round_off_as_string</a></code></li>
