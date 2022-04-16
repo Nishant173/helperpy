@@ -26,109 +26,174 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import asyncio
-from typing import Any, Dict, List, Optional
+<pre><code class="python">from asyncio import (
+    ensure_future,
+    gather,
+    get_event_loop,
+)
+from typing import Any, Callable, Dict, List, Optional
 
-import aiohttp
-from aiohttp.client_reqrep import ClientResponse
+from aiohttp import ClientSession
 
 
-class AsyncApiCaller:
-    &#34;&#34;&#34;
-    Class used to communicate with multiple API endpoints asynchronously (for faster response times).
+class HTTP_METHOD_NAME:
+    &#34;&#34;&#34;Exposes class variables having the various HTTP method names&#34;&#34;&#34;
+    GET = &#34;GET&#34;
+    POST = &#34;POST&#34;
+    PUT = &#34;PUT&#34;
+    PATCH = &#34;PATCH&#34;
+    DELETE = &#34;DELETE&#34;
 
-    Documentation references (aiohttp):
-        - https://docs.aiohttp.org/en/stable/client_reference.html
 
-    Usage:
-    &gt;&gt;&gt; aac = AsyncApiCaller(headers={}, successful_status_codes=[200])
-    &gt;&gt;&gt; data = aac.get_data(
-            urls=[f&#34;https://pokeapi.co/api/v2/pokemon/{number}&#34; for number in range(1, 1000+1)],
+def __choose_session_method(
+        http_method: str,
+        session_obj: ClientSession,
+    ) -&gt; Callable:
+    &#34;&#34;&#34;Returns callable that is used to make the asynchronous API requests&#34;&#34;&#34;
+    if http_method == HTTP_METHOD_NAME.GET:
+        return session_obj.get
+    elif http_method == HTTP_METHOD_NAME.POST:
+        return session_obj.post
+    elif http_method == HTTP_METHOD_NAME.PUT:
+        return session_obj.put
+    elif http_method == HTTP_METHOD_NAME.PATCH:
+        return session_obj.patch
+    elif http_method == HTTP_METHOD_NAME.DELETE:
+        return session_obj.delete
+    raise ValueError(f&#34;Got an invalid `http_method` &#39;{http_method}&#39;&#34;)
+
+
+async def __make_api_call(
+        session: ClientSession,
+        http_method: str,
+        url: str,
+        successful_status_codes: List[int],
+        **request_kwargs,
+    ) -&gt; Dict[str, Any]:
+    &#34;&#34;&#34;Returns dictionary having keys: [&#39;data&#39;, &#39;error&#39;]&#34;&#34;&#34;
+    method_to_call = __choose_session_method(
+        http_method=http_method,
+        session_obj=session,
+    )
+    async with method_to_call(url, **request_kwargs) as response:
+        if response.status in successful_status_codes:
+            data = await response.json()
+            error = None
+        else:
+            data = None
+            error = {
+                &#34;url&#34;: url,
+                &#34;status_code&#34;: response.status,
+                &#34;text&#34;: await response.text(),
+            }
+    return {&#34;data&#34;: data, &#34;error&#34;: error}
+
+
+async def __make_api_calls(
+        http_method: str,
+        urls: List[str],
+        successful_status_codes: List[int],
+        data_items: Optional[List[Any]] = None,
+        **request_kwargs,
+    ) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;Returns list of dictionaries having keys [&#39;data&#39;, &#39;error&#39;], for each URL (API endpoint) called&#34;&#34;&#34;
+    if data_items and (http_method in [HTTP_METHOD_NAME.GET, HTTP_METHOD_NAME.DELETE]):
+        raise ValueError(f&#34;Cannot pass in `data_items` if `http_method` is set to &#39;{http_method}&#39;&#34;)
+    if data_items and (len(data_items) != len(urls)):
+        raise ValueError(
+            &#34;Length of `data_items` must be equal to the length of `urls`,&#34;
+            &#34; as they must correspond to each other&#34;
         )
-    &gt;&gt;&gt; errors = aac.get_errors() # Returns list of errors (if any)
-    &gt;&gt;&gt; aac.clear_errors() # Clears list of errors stored in the object (if any)
-    &#34;&#34;&#34;
 
-    def __init__(
-            self,
-            headers: Optional[Dict[str, Any]] = None,
-            successful_status_codes: Optional[List[int]] = None,
-        ) -&gt; None:
-        &#34;&#34;&#34;
-        Parameters:
-            - headers (dict): Headers for the API calls. Default: {}
-            - successful_status_codes (list): List of successful status codes for the API calls. Default: [200, 204]
-        &#34;&#34;&#34;
-        self.headers = headers if headers else {}
-        self.successful_status_codes = successful_status_codes if successful_status_codes else [200, 204]
-        self.__errors = []
-
-    def __str__(self) -&gt; str:
-        return f&#34;{self.__class__.__name__}(headers={self.headers}, successful_status_codes={self.successful_status_codes})&#34;
-
-    def clear_errors(self) -&gt; None:
-        self.__errors = []
-
-    def get_errors(self) -&gt; List[Dict[str, Any]]:
-        return self.__errors
-
-    async def __register_error(
-            self,
-            url: str,
-            response: ClientResponse,
-        ) -&gt; None:
-        self.__errors.append({
-            &#34;url&#34;: url,
-            &#34;status_code&#34;: response.status,
-            &#34;text&#34;: await response.text(),
-        })
-
-    async def __make_api_call(
-            self,
-            session: aiohttp.ClientSession,
-            url: str,
-        ) -&gt; Any:
-        async with session.get(url, headers=self.headers) as response:
-            if response.status in self.successful_status_codes:
-                data = await response.json()
-            else:
-                data = None
-                await self.__register_error(url=url, response=response)
-        return data
-
-    async def __make_api_calls(
-            self,
-            urls: List[str],
-        ) -&gt; List[Any]:
-        results = []
-        actions = []
-        async with aiohttp.ClientSession() as session:
+    results = []
+    actions = []
+    if not data_items:
+        async with ClientSession() as session:
             for url in urls:
-                actions.append(
-                    asyncio.ensure_future(
-                        self.__make_api_call(
-                            session=session,
-                            url=url,
-                        )
+                future_obj = ensure_future(
+                    __make_api_call(
+                        session=session,
+                        http_method=http_method,
+                        url=url,
+                        successful_status_codes=successful_status_codes,
+                        **request_kwargs,
                     )
                 )
-            results = await asyncio.gather(*actions)
-        results = list(filter(None, results))
+                actions.append(future_obj)
+            results = await gather(*actions)
         return results
 
-    def get_data(
-            self,
-            urls: List[str],
-        ) -&gt; List[Any]:
-        &#34;&#34;&#34;
-        Returns list where each item contains the data of each URL (API endpoint) called.
-        &#34;&#34;&#34;
-        event_loop = asyncio.get_event_loop()
-        data = event_loop.run_until_complete(
-            self.__make_api_calls(urls=urls)
+    async with ClientSession() as session:
+        for url, data_item in zip(urls, data_items):
+            future_obj = ensure_future(
+                __make_api_call(
+                    session=session,
+                    http_method=http_method,
+                    url=url,
+                    successful_status_codes=successful_status_codes,
+                    data=data_item,
+                    **request_kwargs,
+                )
+            )
+            actions.append(future_obj)
+        results = await gather(*actions)
+    return results
+
+
+def make_api_calls(
+        http_method: str,
+        urls: List[str],
+        successful_status_codes: List[int],
+        data_items: Optional[List[Any]] = None,
+        **request_kwargs,
+    ) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;
+    Returns list of dictionaries having keys [&#39;data&#39;, &#39;error&#39;], for each URL (API endpoint) called.
+
+    Parameters:
+        - http_method (str): HTTP method
+        - urls (list): List of URLs (API endpoints) to call
+        - successful_status_codes (list): List of status codes that are considered successful for the requests made
+        - data_items (list): List of data items. Each item must correspond to the URLs in `urls` parameter
+        (pass in `data_items` only for POST, PUT, PATCH methods)
+        - request_kwargs: Kwargs related to the actual requests made i.e; headers.
+
+    Docs: https://docs.aiohttp.org/en/stable/client_reference.html
+
+    Usage:
+    &gt;&gt;&gt; num_api_calls = 1200
+    &gt;&gt;&gt; results = make_api_calls(
+            http_method=HTTP_METHOD_NAME.GET,
+            urls=[f&#34;https://pokeapi.co/api/v2/pokemon/{number}&#34; for number in range(1, num_api_calls+1)],
+            successful_status_codes=[200],
+            headers={},
         )
-        event_loop.close()
-        return data</code></pre>
+    &gt;&gt;&gt; results = make_api_calls(
+            http_method=HTTP_METHOD_NAME.POST,
+            urls=[&#34;https://reqres.in/api/users&#34;] * num_api_calls,
+            successful_status_codes=[200, 201],
+            data_items=[
+                {
+                    &#34;name&#34;: f&#34;MyName{number}&#34;,
+                    &#34;age&#34;: number,
+                    &#34;fav_movie&#34;: f&#34;FavMovieName{number}&#34;,
+                } for number in range(1, num_api_calls+1)
+            ],
+            headers={},
+        )
+    &#34;&#34;&#34;
+    event_loop = get_event_loop()
+    results = event_loop.run_until_complete(
+        __make_api_calls(
+            http_method=http_method,
+            urls=urls,
+            successful_status_codes=successful_status_codes,
+            data_items=data_items,
+            **request_kwargs,
+        )
+    )
+    # event_loop.close()
+    return results</code></pre>
 </details>
 </section>
 <section>
@@ -136,183 +201,148 @@ class AsyncApiCaller:
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="helperpy.asynchronous.async_utils.make_api_calls"><code class="name flex">
+<span>def <span class="ident">make_api_calls</span></span>(<span>http_method: str, urls: List[str], successful_status_codes: List[int], data_items: Optional[List[Any]] = None, **request_kwargs) ‑> List[Dict[str, Any]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns list of dictionaries having keys ['data', 'error'], for each URL (API endpoint) called.</p>
+<h2 id="parameters">Parameters</h2>
+<ul>
+<li>http_method (str): HTTP method</li>
+<li>urls (list): List of URLs (API endpoints) to call</li>
+<li>successful_status_codes (list): List of status codes that are considered successful for the requests made</li>
+<li>data_items (list): List of data items. Each item must correspond to the URLs in <code>urls</code> parameter
+(pass in <code>data_items</code> only for POST, PUT, PATCH methods)</li>
+<li>request_kwargs: Kwargs related to the actual requests made i.e; headers.</li>
+</ul>
+<p>Docs: <a href="https://docs.aiohttp.org/en/stable/client_reference.html">https://docs.aiohttp.org/en/stable/client_reference.html</a></p>
+<p>Usage:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; num_api_calls = 1200
+&gt;&gt;&gt; results = make_api_calls(
+        http_method=HTTP_METHOD_NAME.GET,
+        urls=[f&quot;https://pokeapi.co/api/v2/pokemon/{number}&quot; for number in range(1, num_api_calls+1)],
+        successful_status_codes=[200],
+        headers={},
+    )
+&gt;&gt;&gt; results = make_api_calls(
+        http_method=HTTP_METHOD_NAME.POST,
+        urls=[&quot;https://reqres.in/api/users&quot;] * num_api_calls,
+        successful_status_codes=[200, 201],
+        data_items=[
+            {
+                &quot;name&quot;: f&quot;MyName{number}&quot;,
+                &quot;age&quot;: number,
+                &quot;fav_movie&quot;: f&quot;FavMovieName{number}&quot;,
+            } for number in range(1, num_api_calls+1)
+        ],
+        headers={},
+    )
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_api_calls(
+        http_method: str,
+        urls: List[str],
+        successful_status_codes: List[int],
+        data_items: Optional[List[Any]] = None,
+        **request_kwargs,
+    ) -&gt; List[Dict[str, Any]]:
+    &#34;&#34;&#34;
+    Returns list of dictionaries having keys [&#39;data&#39;, &#39;error&#39;], for each URL (API endpoint) called.
+
+    Parameters:
+        - http_method (str): HTTP method
+        - urls (list): List of URLs (API endpoints) to call
+        - successful_status_codes (list): List of status codes that are considered successful for the requests made
+        - data_items (list): List of data items. Each item must correspond to the URLs in `urls` parameter
+        (pass in `data_items` only for POST, PUT, PATCH methods)
+        - request_kwargs: Kwargs related to the actual requests made i.e; headers.
+
+    Docs: https://docs.aiohttp.org/en/stable/client_reference.html
+
+    Usage:
+    &gt;&gt;&gt; num_api_calls = 1200
+    &gt;&gt;&gt; results = make_api_calls(
+            http_method=HTTP_METHOD_NAME.GET,
+            urls=[f&#34;https://pokeapi.co/api/v2/pokemon/{number}&#34; for number in range(1, num_api_calls+1)],
+            successful_status_codes=[200],
+            headers={},
+        )
+    &gt;&gt;&gt; results = make_api_calls(
+            http_method=HTTP_METHOD_NAME.POST,
+            urls=[&#34;https://reqres.in/api/users&#34;] * num_api_calls,
+            successful_status_codes=[200, 201],
+            data_items=[
+                {
+                    &#34;name&#34;: f&#34;MyName{number}&#34;,
+                    &#34;age&#34;: number,
+                    &#34;fav_movie&#34;: f&#34;FavMovieName{number}&#34;,
+                } for number in range(1, num_api_calls+1)
+            ],
+            headers={},
+        )
+    &#34;&#34;&#34;
+    event_loop = get_event_loop()
+    results = event_loop.run_until_complete(
+        __make_api_calls(
+            http_method=http_method,
+            urls=urls,
+            successful_status_codes=successful_status_codes,
+            data_items=data_items,
+            **request_kwargs,
+        )
+    )
+    # event_loop.close()
+    return results</code></pre>
+</details>
+</dd>
+</dl>
 </section>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="helperpy.asynchronous.async_utils.AsyncApiCaller"><code class="flex name class">
-<span>class <span class="ident">AsyncApiCaller</span></span>
-<span>(</span><span>headers: Optional[Dict[str, Any]] = None, successful_status_codes: Optional[List[int]] = None)</span>
+<dt id="helperpy.asynchronous.async_utils.HTTP_METHOD_NAME"><code class="flex name class">
+<span>class <span class="ident">HTTP_METHOD_NAME</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Class used to communicate with multiple API endpoints asynchronously (for faster response times).</p>
-<p>Documentation references (aiohttp):
-- <a href="https://docs.aiohttp.org/en/stable/client_reference.html">https://docs.aiohttp.org/en/stable/client_reference.html</a></p>
-<p>Usage:</p>
-<pre><code class="language-python-repl">&gt;&gt;&gt; aac = AsyncApiCaller(headers={}, successful_status_codes=[200])
-&gt;&gt;&gt; data = aac.get_data(
-        urls=[f&quot;https://pokeapi.co/api/v2/pokemon/{number}&quot; for number in range(1, 1000+1)],
-    )
-&gt;&gt;&gt; errors = aac.get_errors() # Returns list of errors (if any)
-&gt;&gt;&gt; aac.clear_errors() # Clears list of errors stored in the object (if any)
-</code></pre>
-<h2 id="parameters">Parameters</h2>
-<ul>
-<li>headers (dict): Headers for the API calls. Default: {}</li>
-<li>successful_status_codes (list): List of successful status codes for the API calls. Default: [200, 204]</li>
-</ul></div>
+<div class="desc"><p>Exposes class variables having the various HTTP method names</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class AsyncApiCaller:
-    &#34;&#34;&#34;
-    Class used to communicate with multiple API endpoints asynchronously (for faster response times).
-
-    Documentation references (aiohttp):
-        - https://docs.aiohttp.org/en/stable/client_reference.html
-
-    Usage:
-    &gt;&gt;&gt; aac = AsyncApiCaller(headers={}, successful_status_codes=[200])
-    &gt;&gt;&gt; data = aac.get_data(
-            urls=[f&#34;https://pokeapi.co/api/v2/pokemon/{number}&#34; for number in range(1, 1000+1)],
-        )
-    &gt;&gt;&gt; errors = aac.get_errors() # Returns list of errors (if any)
-    &gt;&gt;&gt; aac.clear_errors() # Clears list of errors stored in the object (if any)
-    &#34;&#34;&#34;
-
-    def __init__(
-            self,
-            headers: Optional[Dict[str, Any]] = None,
-            successful_status_codes: Optional[List[int]] = None,
-        ) -&gt; None:
-        &#34;&#34;&#34;
-        Parameters:
-            - headers (dict): Headers for the API calls. Default: {}
-            - successful_status_codes (list): List of successful status codes for the API calls. Default: [200, 204]
-        &#34;&#34;&#34;
-        self.headers = headers if headers else {}
-        self.successful_status_codes = successful_status_codes if successful_status_codes else [200, 204]
-        self.__errors = []
-
-    def __str__(self) -&gt; str:
-        return f&#34;{self.__class__.__name__}(headers={self.headers}, successful_status_codes={self.successful_status_codes})&#34;
-
-    def clear_errors(self) -&gt; None:
-        self.__errors = []
-
-    def get_errors(self) -&gt; List[Dict[str, Any]]:
-        return self.__errors
-
-    async def __register_error(
-            self,
-            url: str,
-            response: ClientResponse,
-        ) -&gt; None:
-        self.__errors.append({
-            &#34;url&#34;: url,
-            &#34;status_code&#34;: response.status,
-            &#34;text&#34;: await response.text(),
-        })
-
-    async def __make_api_call(
-            self,
-            session: aiohttp.ClientSession,
-            url: str,
-        ) -&gt; Any:
-        async with session.get(url, headers=self.headers) as response:
-            if response.status in self.successful_status_codes:
-                data = await response.json()
-            else:
-                data = None
-                await self.__register_error(url=url, response=response)
-        return data
-
-    async def __make_api_calls(
-            self,
-            urls: List[str],
-        ) -&gt; List[Any]:
-        results = []
-        actions = []
-        async with aiohttp.ClientSession() as session:
-            for url in urls:
-                actions.append(
-                    asyncio.ensure_future(
-                        self.__make_api_call(
-                            session=session,
-                            url=url,
-                        )
-                    )
-                )
-            results = await asyncio.gather(*actions)
-        results = list(filter(None, results))
-        return results
-
-    def get_data(
-            self,
-            urls: List[str],
-        ) -&gt; List[Any]:
-        &#34;&#34;&#34;
-        Returns list where each item contains the data of each URL (API endpoint) called.
-        &#34;&#34;&#34;
-        event_loop = asyncio.get_event_loop()
-        data = event_loop.run_until_complete(
-            self.__make_api_calls(urls=urls)
-        )
-        event_loop.close()
-        return data</code></pre>
+<pre><code class="python">class HTTP_METHOD_NAME:
+    &#34;&#34;&#34;Exposes class variables having the various HTTP method names&#34;&#34;&#34;
+    GET = &#34;GET&#34;
+    POST = &#34;POST&#34;
+    PUT = &#34;PUT&#34;
+    PATCH = &#34;PATCH&#34;
+    DELETE = &#34;DELETE&#34;</code></pre>
 </details>
-<h3>Methods</h3>
+<h3>Class variables</h3>
 <dl>
-<dt id="helperpy.asynchronous.async_utils.AsyncApiCaller.clear_errors"><code class="name flex">
-<span>def <span class="ident">clear_errors</span></span>(<span>self) ‑> None</span>
-</code></dt>
+<dt id="helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.DELETE"><code class="name">var <span class="ident">DELETE</span></code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def clear_errors(self) -&gt; None:
-    self.__errors = []</code></pre>
-</details>
 </dd>
-<dt id="helperpy.asynchronous.async_utils.AsyncApiCaller.get_data"><code class="name flex">
-<span>def <span class="ident">get_data</span></span>(<span>self, urls: List[str]) ‑> List[Any]</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Returns list where each item contains the data of each URL (API endpoint) called.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_data(
-        self,
-        urls: List[str],
-    ) -&gt; List[Any]:
-    &#34;&#34;&#34;
-    Returns list where each item contains the data of each URL (API endpoint) called.
-    &#34;&#34;&#34;
-    event_loop = asyncio.get_event_loop()
-    data = event_loop.run_until_complete(
-        self.__make_api_calls(urls=urls)
-    )
-    event_loop.close()
-    return data</code></pre>
-</details>
-</dd>
-<dt id="helperpy.asynchronous.async_utils.AsyncApiCaller.get_errors"><code class="name flex">
-<span>def <span class="ident">get_errors</span></span>(<span>self) ‑> List[Dict[str, Any]]</span>
-</code></dt>
+<dt id="helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.GET"><code class="name">var <span class="ident">GET</span></code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_errors(self) -&gt; List[Dict[str, Any]]:
-    return self.__errors</code></pre>
-</details>
+</dd>
+<dt id="helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.PATCH"><code class="name">var <span class="ident">PATCH</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.POST"><code class="name">var <span class="ident">POST</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.PUT"><code class="name">var <span class="ident">PUT</span></code></dt>
+<dd>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
@@ -330,14 +360,21 @@ class AsyncApiCaller:
 <li><code><a title="helperpy.asynchronous" href="index.html">helperpy.asynchronous</a></code></li>
 </ul>
 </li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="helperpy.asynchronous.async_utils.make_api_calls" href="#helperpy.asynchronous.async_utils.make_api_calls">make_api_calls</a></code></li>
+</ul>
+</li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="helperpy.asynchronous.async_utils.AsyncApiCaller" href="#helperpy.asynchronous.async_utils.AsyncApiCaller">AsyncApiCaller</a></code></h4>
+<h4><code><a title="helperpy.asynchronous.async_utils.HTTP_METHOD_NAME" href="#helperpy.asynchronous.async_utils.HTTP_METHOD_NAME">HTTP_METHOD_NAME</a></code></h4>
 <ul class="">
-<li><code><a title="helperpy.asynchronous.async_utils.AsyncApiCaller.clear_errors" href="#helperpy.asynchronous.async_utils.AsyncApiCaller.clear_errors">clear_errors</a></code></li>
-<li><code><a title="helperpy.asynchronous.async_utils.AsyncApiCaller.get_data" href="#helperpy.asynchronous.async_utils.AsyncApiCaller.get_data">get_data</a></code></li>
-<li><code><a title="helperpy.asynchronous.async_utils.AsyncApiCaller.get_errors" href="#helperpy.asynchronous.async_utils.AsyncApiCaller.get_errors">get_errors</a></code></li>
+<li><code><a title="helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.DELETE" href="#helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.DELETE">DELETE</a></code></li>
+<li><code><a title="helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.GET" href="#helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.GET">GET</a></code></li>
+<li><code><a title="helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.PATCH" href="#helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.PATCH">PATCH</a></code></li>
+<li><code><a title="helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.POST" href="#helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.POST">POST</a></code></li>
+<li><code><a title="helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.PUT" href="#helperpy.asynchronous.async_utils.HTTP_METHOD_NAME.PUT">PUT</a></code></li>
 </ul>
 </li>
 </ul>

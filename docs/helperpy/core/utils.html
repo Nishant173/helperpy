@@ -48,6 +48,30 @@ def print_docstring(obj: Any) -&gt; None:
     return None
 
 
+def class_object_to_string_repr(
+        class_name: str,
+        details: Dict[str, Any],
+    ) -&gt; str:
+    &#34;&#34;&#34;
+    Writes __str__ representation of a class&#39; instance.
+
+    &gt;&gt;&gt; class_object_to_string_repr(
+            class_name=&#34;Person&#34;,
+            details={
+                &#34;first_name&#34;: &#34;James&#34;,
+                &#34;last_name&#34;: &#34;Murphy&#34;,
+                &#34;age&#34;: 35,
+                &#34;is_developer&#34;: True,
+            },
+        ) # Returns the string: &#34;Person(first_name=&#39;James&#39;, last_name=&#39;Murphy&#39;, age=35, is_developer=True)&#34;
+    &#34;&#34;&#34;
+    kwargs_as_strings = []
+    for key, value in details.items():
+        value_as_string = f&#34;&#39;{value}&#39;&#34; if isinstance(value, str) else str(value)
+        kwargs_as_strings.append(f&#34;{key}={value_as_string}&#34;)
+    return f&#34;{class_name}({&#39;, &#39;.join(kwargs_as_strings)})&#34;
+
+
 def is_none(value: Any) -&gt; bool:
     return value is None
 
@@ -363,6 +387,49 @@ class Partitioner:
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="helperpy.core.utils.class_object_to_string_repr"><code class="name flex">
+<span>def <span class="ident">class_object_to_string_repr</span></span>(<span>class_name: str, details: Dict[str, Any]) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Writes <strong>str</strong> representation of a class' instance.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; class_object_to_string_repr(
+        class_name=&quot;Person&quot;,
+        details={
+            &quot;first_name&quot;: &quot;James&quot;,
+            &quot;last_name&quot;: &quot;Murphy&quot;,
+            &quot;age&quot;: 35,
+            &quot;is_developer&quot;: True,
+        },
+    ) # Returns the string: &quot;Person(first_name='James', last_name='Murphy', age=35, is_developer=True)&quot;
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def class_object_to_string_repr(
+        class_name: str,
+        details: Dict[str, Any],
+    ) -&gt; str:
+    &#34;&#34;&#34;
+    Writes __str__ representation of a class&#39; instance.
+
+    &gt;&gt;&gt; class_object_to_string_repr(
+            class_name=&#34;Person&#34;,
+            details={
+                &#34;first_name&#34;: &#34;James&#34;,
+                &#34;last_name&#34;: &#34;Murphy&#34;,
+                &#34;age&#34;: 35,
+                &#34;is_developer&#34;: True,
+            },
+        ) # Returns the string: &#34;Person(first_name=&#39;James&#39;, last_name=&#39;Murphy&#39;, age=35, is_developer=True)&#34;
+    &#34;&#34;&#34;
+    kwargs_as_strings = []
+    for key, value in details.items():
+        value_as_string = f&#34;&#39;{value}&#39;&#34; if isinstance(value, str) else str(value)
+        kwargs_as_strings.append(f&#34;{key}={value_as_string}&#34;)
+    return f&#34;{class_name}({&#39;, &#39;.join(kwargs_as_strings)})&#34;</code></pre>
+</details>
+</dd>
 <dt id="helperpy.core.utils.commafy_number"><code class="name flex">
 <span>def <span class="ident">commafy_number</span></span>(<span>number: Union[int, float]) ‑> str</span>
 </code></dt>
@@ -993,6 +1060,7 @@ Options for <code>distribution_method</code> are: ['fill', 'uniform']. Default: 
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="helperpy.core.utils.class_object_to_string_repr" href="#helperpy.core.utils.class_object_to_string_repr">class_object_to_string_repr</a></code></li>
 <li><code><a title="helperpy.core.utils.commafy_number" href="#helperpy.core.utils.commafy_number">commafy_number</a></code></li>
 <li><code><a title="helperpy.core.utils.cumulative_aggregate" href="#helperpy.core.utils.cumulative_aggregate">cumulative_aggregate</a></code></li>
 <li><code><a title="helperpy.core.utils.get_max_of_abs_values" href="#helperpy.core.utils.get_max_of_abs_values">get_max_of_abs_values</a></code></li>
