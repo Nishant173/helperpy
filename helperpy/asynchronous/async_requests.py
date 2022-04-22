@@ -20,12 +20,12 @@ Parameters:
 
 Usage:
 >>> num_api_calls = 1200
->>> results_for_get = get(
+>>> results_for_get = async_requests.get(
         successful_status_codes=[200],
         urls=[f"https://pokeapi.co/api/v2/pokemon/{number}" for number in range(1, num_api_calls+1)],
         headers={},
     )
->>> results_for_post = post(
+>>> results_for_post = async_requests.post(
         successful_status_codes=[201],
         urls=["https://reqres.in/api/users"] * num_api_calls,
         data_items=[{"name": f"MyName{number}", "age": number} for number in range(1, num_api_calls+1)],
