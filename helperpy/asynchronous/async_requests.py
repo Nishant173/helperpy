@@ -1,7 +1,8 @@
 """
-Calls the given URLs (API endpoints) asynchronously, and returns list of results.
+Description: Module for communicating with URLs (API endpoints) asynchronously.
 
-Docs: https://docs.aiohttp.org/en/stable/client_reference.html
+Docs:
+    - https://docs.aiohttp.org/en/stable/client_reference.html
 
 Parameters:
     - successful_status_codes (list): List of status codes that are considered successful for the requests made
@@ -73,7 +74,7 @@ async def __make_api_call(
         method_to_call: Callable,
         url: str,
         data: Optional[Any] = None,
-        **request_kwargs,
+        **request_kwargs: Any,
     ) -> ParsedResponse:
     """
     Returns dictionary having the keys: ['url', 'status_code', 'reason', 'method', 'data', 'error_details', 'ok']
@@ -107,7 +108,7 @@ async def __make_api_calls_for_urls(
         http_method: str,
         successful_status_codes: List[int],
         urls: List[str],
-        **request_kwargs,
+        **request_kwargs: Any,
     ) -> ParsedResponses:
     """Helper function used to make asynchronous GET, DELETE requests"""
     results = []
@@ -138,7 +139,7 @@ async def __make_api_calls_for_urls_and_data_items(
         successful_status_codes: List[int],
         urls: List[str],
         data_items: List[Any],
-        **request_kwargs,
+        **request_kwargs: Any,
     ) -> ParsedResponses:
     """Helper function used to make asynchronous POST, PUT, PATCH requests"""
     if len(urls) != len(data_items):
@@ -169,7 +170,7 @@ async def __make_api_calls_for_urls_and_data_items(
     return results
 
 
-def __async_to_sync(*, async_func: Callable, **kwargs) -> Any:
+def __async_to_sync(*, async_func: Callable, **kwargs: Any) -> Any:
     """Converts given asynchronous function to synchronous function, and returns it's output"""
     event_loop = get_event_loop()
     output = event_loop.run_until_complete(
@@ -183,7 +184,7 @@ def get(
         *,
         successful_status_codes: List[int],
         urls: List[str],
-        **request_kwargs,
+        **request_kwargs: Any,
     ) -> ParsedResponses:
     """Makes asynchronous API calls (in bulk) for the GET method."""
     results = __async_to_sync(
@@ -201,7 +202,7 @@ def post(
         successful_status_codes: List[int],
         urls: List[str],
         data_items: List[Any],
-        **request_kwargs,
+        **request_kwargs: Any,
     ) -> ParsedResponses:
     """Makes asynchronous API calls (in bulk) for the POST method"""
     results = __async_to_sync(
@@ -220,7 +221,7 @@ def put(
         successful_status_codes: List[int],
         urls: List[str],
         data_items: List[Any],
-        **request_kwargs,
+        **request_kwargs: Any,
     ) -> ParsedResponses:
     """Makes asynchronous API calls (in bulk) for the PUT method"""
     results = __async_to_sync(
@@ -239,7 +240,7 @@ def patch(
         successful_status_codes: List[int],
         urls: List[str],
         data_items: List[Any],
-        **request_kwargs,
+        **request_kwargs: Any,
     ) -> ParsedResponses:
     """Makes asynchronous API calls (in bulk) for the PATCH method"""
     results = __async_to_sync(
@@ -257,7 +258,7 @@ def delete(
         *,
         successful_status_codes: List[int],
         urls: List[str],
-        **request_kwargs,
+        **request_kwargs: Any,
     ) -> ParsedResponses:
     """Makes asynchronous API calls (in bulk) for the DELETE method"""
     results = __async_to_sync(
