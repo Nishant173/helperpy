@@ -1,5 +1,5 @@
 """
-Description: Module for communicating with URLs (API endpoints) asynchronously.
+Description: Module for communicating with API endpoints asynchronously.
 
 Docs:
     - https://docs.aiohttp.org/en/stable/client_reference.html
