@@ -4,6 +4,13 @@ Description: Module for communicating with URLs (API endpoints) asynchronously.
 Docs:
     - https://docs.aiohttp.org/en/stable/client_reference.html
 
+Functions exposed:
+    - async_requests.get()
+    - async_requests.post()
+    - async_requests.put()
+    - async_requests.patch()
+    - async_requests.delete()
+
 Parameters:
     - successful_status_codes (list): List of status codes that are considered successful for the requests made
     - urls (list): List of URLs (API endpoints) to call
