@@ -55,17 +55,35 @@ def __choose_session_method(
         session_obj: ClientSession,
     ) -> Callable:
     """Returns callable that is used to make the asynchronous API requests"""
-    if http_method == _HTTP_METHOD_NAME.GET:
-        return session_obj.get
-    elif http_method == _HTTP_METHOD_NAME.POST:
-        return session_obj.post
-    elif http_method == _HTTP_METHOD_NAME.PUT:
-        return session_obj.put
-    elif http_method == _HTTP_METHOD_NAME.PATCH:
-        return session_obj.patch
-    elif http_method == _HTTP_METHOD_NAME.DELETE:
-        return session_obj.delete
-    raise ValueError(f"Got an invalid `http_method` '{http_method}'")
+    session_method_mapper = {
+        _HTTP_METHOD_NAME.GET: session_obj.get,
+        _HTTP_METHOD_NAME.POST: session_obj.post,
+        _HTTP_METHOD_NAME.PUT: session_obj.put,
+        _HTTP_METHOD_NAME.PATCH: session_obj.patch,
+        _HTTP_METHOD_NAME.DELETE: session_obj.delete,
+    }
+    if http_method not in session_method_mapper.keys():
+        raise ValueError(f"Expected `http_method` to be in {list(session_method_mapper.keys())}, but got '{http_method}'")
+    return session_method_mapper[http_method]
+
+
+# def __choose_session_method(
+#         *,
+#         http_method: str,
+#         session_obj: ClientSession,
+#     ) -> Callable:
+#     """Returns callable that is used to make the asynchronous API requests"""
+#     if http_method == _HTTP_METHOD_NAME.GET:
+#         return session_obj.get
+#     elif http_method == _HTTP_METHOD_NAME.POST:
+#         return session_obj.post
+#     elif http_method == _HTTP_METHOD_NAME.PUT:
+#         return session_obj.put
+#     elif http_method == _HTTP_METHOD_NAME.PATCH:
+#         return session_obj.patch
+#     elif http_method == _HTTP_METHOD_NAME.DELETE:
+#         return session_obj.delete
+#     raise ValueError(f"Got an invalid `http_method` '{http_method}'")
 
 
 async def __make_api_call(
