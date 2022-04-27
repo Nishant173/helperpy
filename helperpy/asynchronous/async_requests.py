@@ -74,25 +74,6 @@ def __choose_session_method(
     return session_method_mapper[http_method]
 
 
-# def __choose_session_method(
-#         *,
-#         http_method: str,
-#         session_obj: ClientSession,
-#     ) -> Callable:
-#     """Returns callable that is used to make the asynchronous API requests"""
-#     if http_method == _HTTP_METHOD_NAME.GET:
-#         return session_obj.get
-#     elif http_method == _HTTP_METHOD_NAME.POST:
-#         return session_obj.post
-#     elif http_method == _HTTP_METHOD_NAME.PUT:
-#         return session_obj.put
-#     elif http_method == _HTTP_METHOD_NAME.PATCH:
-#         return session_obj.patch
-#     elif http_method == _HTTP_METHOD_NAME.DELETE:
-#         return session_obj.delete
-#     raise ValueError(f"Got an invalid `http_method` '{http_method}'")
-
-
 async def __make_api_call(
         *,
         successful_status_codes: List[int],
@@ -102,7 +83,7 @@ async def __make_api_call(
         **request_kwargs: Any,
     ) -> ParsedResponse:
     """
-    Returns dictionary having the keys: ['url', 'status_code', 'reason', 'method', 'data', 'error_details', 'ok']
+    Makes an API call, and returns parsed response in a dictionary having the keys: ['url', 'status_code', 'reason', 'method', 'data', 'error_details', 'ok']
     """
     data_as_kwargs = {} if data is None else {'data': data}
     async with method_to_call(url, **data_as_kwargs, **request_kwargs) as response:
@@ -136,7 +117,7 @@ async def __make_api_calls_for_urls(
         **request_kwargs: Any,
     ) -> ParsedResponses:
     """Helper function used to make asynchronous GET, DELETE requests"""
-    results = []
+    parsed_responses = []
     actions = []
     async with ClientSession() as session:
         method_to_call = __choose_session_method(
@@ -154,8 +135,8 @@ async def __make_api_calls_for_urls(
                     )
                 )
             )
-        results = await gather(*actions)
-    return results
+        parsed_responses = await gather(*actions)
+    return parsed_responses
 
 
 async def __make_api_calls_for_urls_and_data_items(
@@ -172,7 +153,7 @@ async def __make_api_calls_for_urls_and_data_items(
             "Expected `urls` and `data_items` to be of same length (as they must correspond to each other), but"
             f" got lengths ({len(urls)}, {len(data_items)}) respectively"
         )
-    results = []
+    parsed_responses = []
     actions = []
     async with ClientSession() as session:
         method_to_call = __choose_session_method(
@@ -191,8 +172,8 @@ async def __make_api_calls_for_urls_and_data_items(
                     )
                 )
             )
-        results = await gather(*actions)
-    return results
+        parsed_responses = await gather(*actions)
+    return parsed_responses
 
 
 def __async_to_sync(*, async_func: Callable, **kwargs: Any) -> Any:
@@ -211,15 +192,14 @@ def get(
         urls: List[str],
         **request_kwargs: Any,
     ) -> ParsedResponses:
-    """Makes asynchronous API calls (in bulk) for the GET method."""
-    results = __async_to_sync(
+    """Makes asynchronous API calls (in bulk) for the GET method"""
+    return __async_to_sync(
         async_func=__make_api_calls_for_urls,
         http_method=_HTTP_METHOD_NAME.GET,
         successful_status_codes=successful_status_codes,
         urls=urls,
         **request_kwargs,
     )
-    return results
 
 
 def post(
@@ -230,7 +210,7 @@ def post(
         **request_kwargs: Any,
     ) -> ParsedResponses:
     """Makes asynchronous API calls (in bulk) for the POST method"""
-    results = __async_to_sync(
+    return __async_to_sync(
         async_func=__make_api_calls_for_urls_and_data_items,
         http_method=_HTTP_METHOD_NAME.POST,
         successful_status_codes=successful_status_codes,
@@ -238,7 +218,6 @@ def post(
         data_items=data_items,
         **request_kwargs,
     )
-    return results
 
 
 def put(
@@ -249,7 +228,7 @@ def put(
         **request_kwargs: Any,
     ) -> ParsedResponses:
     """Makes asynchronous API calls (in bulk) for the PUT method"""
-    results = __async_to_sync(
+    return __async_to_sync(
         async_func=__make_api_calls_for_urls_and_data_items,
         http_method=_HTTP_METHOD_NAME.PUT,
         successful_status_codes=successful_status_codes,
@@ -257,7 +236,6 @@ def put(
         data_items=data_items,
         **request_kwargs,
     )
-    return results
 
 
 def patch(
@@ -268,7 +246,7 @@ def patch(
         **request_kwargs: Any,
     ) -> ParsedResponses:
     """Makes asynchronous API calls (in bulk) for the PATCH method"""
-    results = __async_to_sync(
+    return __async_to_sync(
         async_func=__make_api_calls_for_urls_and_data_items,
         http_method=_HTTP_METHOD_NAME.PATCH,
         successful_status_codes=successful_status_codes,
@@ -276,7 +254,6 @@ def patch(
         data_items=data_items,
         **request_kwargs,
     )
-    return results
 
 
 def delete(
@@ -286,12 +263,11 @@ def delete(
         **request_kwargs: Any,
     ) -> ParsedResponses:
     """Makes asynchronous API calls (in bulk) for the DELETE method"""
-    results = __async_to_sync(
+    return __async_to_sync(
         async_func=__make_api_calls_for_urls,
         http_method=_HTTP_METHOD_NAME.DELETE,
         successful_status_codes=successful_status_codes,
         urls=urls,
         **request_kwargs,
     )
-    return results
 
