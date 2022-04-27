@@ -87,9 +87,8 @@ async def __make_api_call(
     """
     data_as_kwargs = {} if data is None else {'data': data}
     async with method_to_call(url, **data_as_kwargs, **request_kwargs) as response:
-        response_json_parser_kwargs = {"content_type": None} # For cases where there is no data in the response (usually for DELETE method)
         if response.status in successful_status_codes:
-            data = await response.json(**response_json_parser_kwargs)
+            data = await response.json(content_type=None)
             error_details = {}
             ok = True
         else:
