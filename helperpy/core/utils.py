@@ -97,10 +97,7 @@ def is_none(value: Any) -> bool:
 
 def is_nan(value: Any) -> bool:
     """Returns True if value given is Numpy's NaN. Otherwise returns False"""
-    if isinstance(value, float):
-        if np.isnan(value):
-            return True
-    return False
+    return isinstance(value, float) and np.isnan(value)
 
 
 def is_none_or_nan(value: Any) -> bool:
