@@ -1,4 +1,4 @@
-from typing import List, Optional, Tuple, Union
+from typing import List, Literal, Optional, Tuple, Union
 
 from datetime import (
     date,
@@ -40,6 +40,55 @@ class TimeUnitConverter:
     HOURS_PER_NON_LEAP_YEAR = HOURS_PER_DAY * 365
     HOURS_PER_LEAP_YEAR = HOURS_PER_DAY * 366
 
+
+def compare_day_and_month(a: date, b: date, /) -> Literal["<", ">", "=="]:
+    """
+    Compares only the day and month of the given date objects.
+        - If a < b, returns '<'
+        - If a > b, returns '>'
+        - If a == b, returns '=='
+    """
+    if a.month < b.month:
+        return "<"
+    if a.month > b.month:
+        return ">"
+    if a.day < b.day:
+        return "<"
+    if a.day > b.day:
+        return ">"
+    return "=="
+
+
+def is_leap_day(x: date, /) -> bool:
+    """Returns `True` if the given date is February 29th (irrespective of the year)"""
+    return x.month == 2 and x.day == 29
+
+
+def compute_date_difference(d1: date, d2: date, /) -> Tuple[int, int]:
+    """Computes the absolute date-difference, and returns a tuple of (years, days)"""
+    if d1 == d2:
+        return (0, 0)
+    if d1 > d2:
+        d1, d2 = d2, d1  # ensure that d1 < d2
+
+    d1_copy = d1.replace()
+    year_difference = d2.year - d1.year
+    operator = compare_day_and_month(d2, d1)
+    if operator == ">":
+        if is_leap_day(d1_copy):
+            d1_copy = d1_copy.replace(year=d2.year, month=2, day=28)
+        else:
+            d1_copy = d1_copy.replace(year=d2.year)
+    elif operator == "<":
+        year_difference -= 1
+        if is_leap_day(d1_copy):
+            d1_copy = d1_copy.replace(year=d2.year - 1, month=2, day=28)
+        else:
+            d1_copy = d1_copy.replace(year=d2.year - 1)
+    elif operator == "==":
+        return (year_difference, 0)
+    day_difference = (d2 - d1_copy).days
+    return (year_difference, day_difference)
 
 
 def get_current_timestamp_as_integer() -> int:
