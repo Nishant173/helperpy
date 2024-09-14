@@ -1,5 +1,6 @@
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Type
 import random
+from uuid import UUID
 
 import numpy as np
 
@@ -13,35 +14,81 @@ from helperpy.core.type_annotations import (
 )
 
 
+def is_instance_of_any(obj: Any, types: List[Type]) -> bool:
+    return any((isinstance(obj, type_) for type_ in types))
+
+
+def __get_kwarg_as_string(key: Any, value: Any) -> str:
+    return f"{key}='{value}'" if is_instance_of_any(obj=value, types=[str, UUID]) else f"{key}={value}"
+
+
+def __single_line_string_repr(
+        *,
+        class_name: str,
+        kwargs_dict: Dict[str, Any],
+    ) -> str:
+    if not kwargs_dict:
+        return f"{class_name}()"
+    kwargs_dict_as_string = ", ".join(
+        [__get_kwarg_as_string(key=key, value=value) for key, value in kwargs_dict.items()]
+    )
+    return f"{class_name}({kwargs_dict_as_string})"
+
+
+def __multi_line_string_repr(
+        *,
+        class_name: str,
+        kwargs_dict: Dict[str, Any],
+    ) -> str:
+    if not kwargs_dict:
+        return f"{class_name}()"
+    indent = 4
+    kwargs_dict_as_string = ""
+    for key, value in kwargs_dict.items():
+        kwargs_dict_as_string += " " * indent + __get_kwarg_as_string(key=key, value=value) + "," + "\n"
+    kwargs_dict_as_string = kwargs_dict_as_string.rstrip()
+    return f"{class_name}(\n{kwargs_dict_as_string}\n)"
+
+
+def create_string_repr(
+        *,
+        instance: Any,
+        kwargs_dict: Optional[Dict[str, Any]] = None,
+        multi_line: Optional[bool] = True,
+    ) -> str:
+    """
+    Writes __str__ representation of a class' instance.
+
+    ```
+    class Person:
+        pass
+
+    create_string_repr(
+        instance=Person(),
+        kwargs_dict={
+            "first_name": "James",
+            "last_name": "Murphy",
+            "age": 35,
+            "is_developer": True,
+        },
+        multi_line=False,
+    ) # Returns the string: "Person(first_name='James', last_name='Murphy', age=35, is_developer=True)"
+    ```
+    """
+    kwargs_dict = {} if kwargs_dict is None else kwargs_dict
+    assert isinstance(kwargs_dict, dict), f"`kwargs_dict` needs to be a dictionary, but got {type(kwargs_dict)}"
+    kw = {
+        "class_name": instance.__class__.__name__,
+        "kwargs_dict": kwargs_dict,
+    }
+    return __multi_line_string_repr(**kw) if multi_line else __single_line_string_repr(**kw)
+
+
 def print_docstring(obj: Any) -> None:
     """Prints the doc-string (if available). Usually of a class, method or function."""
     if hasattr(obj, "__doc__"):
         print(obj.__doc__)
     return None
-
-
-def class_object_to_string_repr(
-        class_name: str,
-        details: Dict[str, Any],
-    ) -> str:
-    """
-    Writes __str__ representation of a class' instance.
-
-    >>> class_object_to_string_repr(
-            class_name="Person",
-            details={
-                "first_name": "James",
-                "last_name": "Murphy",
-                "age": 35,
-                "is_developer": True,
-            },
-        ) # Returns the string: "Person(first_name='James', last_name='Murphy', age=35, is_developer=True)"
-    """
-    kwargs_as_strings = []
-    for key, value in details.items():
-        value_as_string = f"'{value}'" if isinstance(value, str) else str(value)
-        kwargs_as_strings.append(f"{key}={value_as_string}")
-    return f"{class_name}({', '.join(kwargs_as_strings)})"
 
 
 def is_none(value: Any) -> bool:
@@ -50,10 +97,7 @@ def is_none(value: Any) -> bool:
 
 def is_nan(value: Any) -> bool:
     """Returns True if value given is Numpy's NaN. Otherwise returns False"""
-    if isinstance(value, float):
-        if np.isnan(value):
-            return True
-    return False
+    return isinstance(value, float) and np.isnan(value)
 
 
 def is_none_or_nan(value: Any) -> bool:
