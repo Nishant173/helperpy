@@ -195,13 +195,20 @@ class TimeTravel:
         )
 
     def __str__(self) -> str:
-        if self.value_dtype == "DATETIME":
-            return self.value.strftime(DATETIME_FORMAT)
-        return self.value.strftime(DATE_FORMAT)
+        return self.value_as_string()
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(value='{self.value_as_string()}')"
 
     def copy(self) -> TimeTravel:
         """Returns a copy (new instance) of the `TimeTravel` object"""
         return TimeTravel(self.value)
+
+    def value_as_string(self) -> str:
+        """Returns the string representation of the `value` property"""
+        if self.value_dtype == "DATETIME":
+            return self.value.strftime(DATETIME_FORMAT)
+        return self.value.strftime(DATE_FORMAT)
 
     @property
     def value(self) -> Union[datetime, date]:
@@ -313,6 +320,7 @@ class TimeTravel:
             milliseconds: int = 0,
             microseconds: int = 0,
         ) -> TimeTravel:
+        """Returns the same `TimeTravel` instance after modifying it in-place"""
         assert is_non_negative_integer(years), "Param `years` must be a non-negative integer"
         assert is_non_negative_integer(months), "Param `months` must be a non-negative integer"
         assert is_non_negative_integer(weeks), "Param `weeks` must be a non-negative integer"
@@ -354,6 +362,7 @@ class TimeTravel:
             milliseconds: int = 0,
             microseconds: int = 0,
         ) -> TimeTravel:
+        """Returns the same `TimeTravel` instance after modifying it in-place"""
         assert is_non_negative_integer(years), "Param `years` must be a non-negative integer"
         assert is_non_negative_integer(months), "Param `months` must be a non-negative integer"
         assert is_non_negative_integer(weeks), "Param `weeks` must be a non-negative integer"
